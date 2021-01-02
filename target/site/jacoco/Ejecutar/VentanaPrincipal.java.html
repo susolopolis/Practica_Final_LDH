@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VentanaPrincipal.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Practica_Final_LDH</a> &gt; <a href="index.source.html" class="el_package">Ejecutar</a> &gt; <span class="el_source">VentanaPrincipal.java</span></div><h1>VentanaPrincipal.java</h1><pre class="source lang-java linenums">package Ejecutar;
+
+import Objetos.*;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.GridLayout;
+import java.awt.Font;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.SystemColor;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class VentanaPrincipal extends JFrame {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
+
+    private JPanel pnPrincipal;
+    private JPanel pnObjetos;
+    private JPanel pnLocalizacion;
+    private JLabel lbListaObjetos;
+
+    private JScrollPane scrollPaneListaObjetos;
+    protected JList&lt;Objeto_Casa&gt; listObjetos;
+    protected DefaultListModel&lt;Objeto_Casa&gt; modelObjetos;
+    private DefaultListModel&lt;Objeto_Casa&gt; modelObjetosGuardados;
+
+    private JPanel pnBotones;
+    private JPanel pnBtInferior;
+    protected JButton btRecuperar;
+    protected JButton btGuardar;
+    private JPanel pnBtSuperior;
+    protected JButton btCrear;
+    protected JButton btActualizar;
+    protected JButton btEliminar;
+    private JLabel lbInformacionObjetos;
+    private JPanel pnCampos;
+    private JPanel pnPosiciones;
+    private JLabel lbId;
+    private JTextField txId;
+    private JLabel lbMarca;
+    private JTextField txMarca;
+    private JLabel lbModelo;
+    private JTextField txModelo;
+    private JLabel lbValor;
+    private JTextField txValor;
+    private JCheckBox chckbxEditar;
+    private JSeparator separator;
+    private JLabel lbPosicionX;
+    private JTextField txPosicionX;
+    private JLabel lbPosicionY;
+    private JTextField txPosicionY;
+
+    Casa casa;
+
+<span class="fc" id="L68">    Objeto_Casa ultimaSeleccion = null;</span>
+
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+<span class="nc" id="L74">        EventQueue.invokeLater(new Runnable() {</span>
+            public void run() {
+                try {
+<span class="nc" id="L77">                    VentanaPrincipal frame = new VentanaPrincipal();</span>
+<span class="nc" id="L78">                    frame.setVisible(true);</span>
+<span class="nc" id="L79">                } catch (Exception e) {</span>
+<span class="nc" id="L80">                    e.printStackTrace();</span>
+<span class="nc" id="L81">                }</span>
+<span class="nc" id="L82">            }</span>
+        });
+<span class="nc" id="L84">    }</span>
+
+    /**
+     * Create the frame.
+     */
+<span class="fc" id="L89">    public VentanaPrincipal() {</span>
+<span class="fc" id="L90">        casa = new Casa(1000, 500);</span>
+<span class="fc" id="L91">        modelObjetosGuardados = new DefaultListModel&lt;Objeto_Casa&gt;();</span>
+
+<span class="fc" id="L93">        setTitle(&quot;Seguimiento de objetos en el hogar&quot;);</span>
+        //setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource(&quot;src/Codigo/img/ObjectTrackingIcon.png&quot;)));
+<span class="fc" id="L95">        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="fc" id="L96">        setBounds(100, 100, 700, 400);</span>
+<span class="fc" id="L97">        pnPrincipal = new JPanel();</span>
+<span class="fc" id="L98">        pnPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));</span>
+<span class="fc" id="L99">        pnPrincipal.setLayout(new BorderLayout(0, 0));</span>
+<span class="fc" id="L100">        setContentPane(pnPrincipal);</span>
+<span class="fc" id="L101">        pnPrincipal.add(getPnObjetos(), BorderLayout.WEST);</span>
+<span class="fc" id="L102">        pnPrincipal.add(getPnLocalizacion(), BorderLayout.CENTER);</span>
+
+<span class="fc" id="L104">        setLocationRelativeTo(null);</span>
+<span class="fc" id="L105">    }</span>
+
+    public JPanel getPnObjetos() {
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">        if (pnObjetos == null) {</span>
+<span class="fc" id="L109">            pnObjetos = new JPanel();</span>
+<span class="fc" id="L110">            GridBagLayout gbl_pnObjetos = new GridBagLayout();</span>
+<span class="fc" id="L111">            gbl_pnObjetos.columnWidths = new int[]{214, 0};</span>
+<span class="fc" id="L112">            gbl_pnObjetos.rowHeights = new int[]{36, 244, 70, 0, 0, 0};</span>
+<span class="fc" id="L113">            gbl_pnObjetos.columnWeights = new double[]{1.0, Double.MIN_VALUE};</span>
+<span class="fc" id="L114">            gbl_pnObjetos.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};</span>
+<span class="fc" id="L115">            pnObjetos.setLayout(gbl_pnObjetos);</span>
+<span class="fc" id="L116">            GridBagConstraints gbc_lbListaObjetos = new GridBagConstraints();</span>
+<span class="fc" id="L117">            gbc_lbListaObjetos.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L118">            gbc_lbListaObjetos.insets = new Insets(0, 0, 5, 0);</span>
+<span class="fc" id="L119">            gbc_lbListaObjetos.gridx = 0;</span>
+<span class="fc" id="L120">            gbc_lbListaObjetos.gridy = 0;</span>
+<span class="fc" id="L121">            pnObjetos.add(getLbListaObjetos(), gbc_lbListaObjetos);</span>
+<span class="fc" id="L122">            GridBagConstraints gbc_scrollPaneListaObjetos = new GridBagConstraints();</span>
+<span class="fc" id="L123">            gbc_scrollPaneListaObjetos.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L124">            gbc_scrollPaneListaObjetos.insets = new Insets(0, 0, 5, 0);</span>
+<span class="fc" id="L125">            gbc_scrollPaneListaObjetos.gridx = 0;</span>
+<span class="fc" id="L126">            gbc_scrollPaneListaObjetos.gridy = 1;</span>
+<span class="fc" id="L127">            pnObjetos.add(getScrollPaneListaObjetos(), gbc_scrollPaneListaObjetos);</span>
+<span class="fc" id="L128">            GridBagConstraints gbc_pnBotones = new GridBagConstraints();</span>
+<span class="fc" id="L129">            gbc_pnBotones.insets = new Insets(0, 0, 5, 0);</span>
+<span class="fc" id="L130">            gbc_pnBotones.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L131">            gbc_pnBotones.gridx = 0;</span>
+<span class="fc" id="L132">            gbc_pnBotones.gridy = 2;</span>
+<span class="fc" id="L133">            pnObjetos.add(getPnBotones(), gbc_pnBotones);</span>
+        }
+<span class="fc" id="L135">        return pnObjetos;</span>
+    }
+
+    public JPanel getPnLocalizacion() {
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">        if (pnLocalizacion == null) {</span>
+<span class="fc" id="L140">            pnLocalizacion = new JPanel();</span>
+<span class="fc" id="L141">            pnLocalizacion.setLayout(new BorderLayout(0, 0));</span>
+<span class="fc" id="L142">            pnLocalizacion.add(getLbInformacionObjetos(), BorderLayout.NORTH);</span>
+<span class="fc" id="L143">            pnLocalizacion.add(getPnCampos(), BorderLayout.CENTER);</span>
+<span class="fc" id="L144">            pnLocalizacion.add(getPnPosiciones(), BorderLayout.SOUTH);</span>
+        }
+<span class="fc" id="L146">        return pnLocalizacion;</span>
+    }
+
+    public JLabel getLbListaObjetos() {
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (lbListaObjetos == null) {</span>
+<span class="fc" id="L151">            lbListaObjetos = new JLabel(&quot;Lista de objetos:&quot;);</span>
+<span class="fc" id="L152">            lbListaObjetos.setVerticalAlignment(SwingConstants.TOP);</span>
+<span class="fc" id="L153">            lbListaObjetos.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 16));</span>
+        }
+<span class="fc" id="L155">        return lbListaObjetos;</span>
+    }
+
+    public JScrollPane getScrollPaneListaObjetos() {
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">        if (scrollPaneListaObjetos == null) {</span>
+<span class="fc" id="L160">            scrollPaneListaObjetos = new JScrollPane();</span>
+<span class="fc" id="L161">            scrollPaneListaObjetos.setViewportBorder(new EmptyBorder(1, 1, 1, 1));</span>
+<span class="fc" id="L162">            scrollPaneListaObjetos.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);</span>
+<span class="fc" id="L163">            scrollPaneListaObjetos.setViewportView(getListObjetos());</span>
+        }
+<span class="fc" id="L165">        return scrollPaneListaObjetos;</span>
+    }
+
+    public JList&lt;Objeto_Casa&gt; getListObjetos() {
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">        if (listObjetos == null) {</span>
+<span class="fc" id="L170">            modelObjetos = new DefaultListModel&lt;Objeto_Casa&gt;();</span>
+<span class="fc" id="L171">            listObjetos = new JList&lt;Objeto_Casa&gt;();</span>
+<span class="fc" id="L172">            listObjetos.addListSelectionListener(new ListSelectionListener() {</span>
+                public void valueChanged(ListSelectionEvent arg0) {
+<span class="nc bnc" id="L174" title="All 2 branches missed.">                    if (!listObjetos.isSelectionEmpty())</span>
+<span class="nc" id="L175">                        actualizarValores(modelObjetos.get(listObjetos.getSelectedIndex()));</span>
+<span class="nc" id="L176">                }</span>
+            });
+<span class="fc" id="L178">            listObjetos.setModel(modelObjetos);</span>
+<span class="fc" id="L179">            listObjetos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+        }
+<span class="fc" id="L181">        return listObjetos;</span>
+    }
+
+
+    public JPanel getPnBotones() {
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">        if (pnBotones == null) {</span>
+<span class="fc" id="L187">            pnBotones = new JPanel();</span>
+<span class="fc" id="L188">            pnBotones.setLayout(new GridLayout(2, 3, 0, 0));</span>
+<span class="fc" id="L189">            pnBotones.add(getPnBtSuperior());</span>
+<span class="fc" id="L190">            pnBotones.add(getPnBtInferior());</span>
+        }
+<span class="fc" id="L192">        return pnBotones;</span>
+    }
+
+    public JPanel getPnBtInferior() {
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">        if (pnBtInferior == null) {</span>
+<span class="fc" id="L197">            pnBtInferior = new JPanel();</span>
+<span class="fc" id="L198">            pnBtInferior.add(getBtRecuperar());</span>
+<span class="fc" id="L199">            pnBtInferior.add(getBtGuardar());</span>
+        }
+<span class="fc" id="L201">        return pnBtInferior;</span>
+    }
+
+    public JButton getBtRecuperar() {
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">        if (btRecuperar == null) {</span>
+<span class="fc" id="L206">            btRecuperar = new JButton(&quot;Recuperar&quot;);</span>
+<span class="fc" id="L207">            btRecuperar.addActionListener(new ActionListener() {</span>
+                public void actionPerformed(ActionEvent arg0) {
+<span class="fc" id="L209">                    Object[] opciones = modelObjetosGuardados.toArray();</span>
+
+<span class="fc" id="L211">                    Object objetoSeleccionado = JOptionPane.showInputDialog(getReferenciaThis(),</span>
+                            &quot;Escoje un objeto a recuperar&quot;,
+                            &quot;Recuperar objeto&quot;,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            opciones,
+                            ultimaSeleccion);
+
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">                    if (objetoSeleccionado == null) {</span>
+                        // Si el usuario cancela; no ha seleccionado nada; o pulsó Escape or hit escape
+<span class="fc" id="L221">                        JOptionPane.showMessageDialog(null, &quot;\r\nOperación cancelada&quot;);</span>
+                    } else {
+                        // Se recupera el objeto
+<span class="nc" id="L224">                        ultimaSeleccion = (Objeto_Casa) objetoSeleccionado;</span>
+<span class="nc" id="L225">                        recuperarObjeto(ultimaSeleccion);</span>
+                    }
+<span class="fc" id="L227">                }</span>
+            });
+        }
+<span class="fc" id="L230">        return btRecuperar;</span>
+    }
+
+    public void recuperarObjeto(Objeto_Casa objetoARecuperar) {
+<span class="fc bfc" id="L234" title="All 2 branches covered.">        if (!doesItContain(objetoARecuperar, modelObjetos)) {</span>
+<span class="fc" id="L235">            modelObjetos.addElement(objetoARecuperar);</span>
+<span class="fc" id="L236">            casa.agregar_objeto(objetoARecuperar);</span>
+        } else {
+<span class="fc" id="L238">            JOptionPane.showMessageDialog(null, &quot;El objeto que desea recuperar ya existe&quot; +</span>
+                    &quot; en la lista actual&quot;);
+        }
+<span class="fc" id="L241">    }</span>
+
+    public JButton getBtGuardar() {
+<span class="fc bfc" id="L244" title="All 2 branches covered.">        if (btGuardar == null) {</span>
+<span class="fc" id="L245">            btGuardar = new JButton(&quot;Guardar&quot;);</span>
+<span class="fc" id="L246">            btGuardar.addActionListener(new ActionListener() {</span>
+                public void actionPerformed(ActionEvent arg0) {
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">                    if (!listObjetos.isSelectionEmpty()) {</span>
+<span class="nc" id="L249">                        Objeto_Casa objetoAGuardar = listObjetos.getSelectedValue();</span>
+<span class="nc bnc" id="L250" title="All 2 branches missed.">                        if (modelObjetosGuardados.isEmpty()) {</span>
+<span class="nc" id="L251">                            modelObjetosGuardados.addElement(objetoAGuardar);</span>
+<span class="nc" id="L252">                            JOptionPane.showMessageDialog(null, &quot;Se ha guardado el objeto correctamente.&quot;);</span>
+                        } else {
+<span class="nc bnc" id="L254" title="All 2 branches missed.">                            if (!doesItContain(objetoAGuardar, modelObjetosGuardados)) {</span>
+<span class="nc" id="L255">                                modelObjetosGuardados.addElement(objetoAGuardar);</span>
+<span class="nc" id="L256">                                JOptionPane.showMessageDialog(null, &quot;Se ha guardado el objeto correctamente.&quot;);</span>
+                            } else {
+<span class="nc" id="L258">                                JOptionPane.showMessageDialog(null, &quot;El objeto &quot;</span>
+<span class="nc" id="L259">                                        + objetoAGuardar.getModelo() + &quot; con ID &quot; + objetoAGuardar.getID() +</span>
+                                        &quot; ya estaba guardado.&quot;, &quot;Objeto previamente almacenado&quot;, JOptionPane.WARNING_MESSAGE);
+                            }
+                        }
+
+                    }
+
+<span class="fc" id="L266">                }</span>
+            });
+        }
+<span class="fc" id="L269">        return btGuardar;</span>
+    }
+
+    public JPanel getPnBtSuperior() {
+<span class="pc bpc" id="L273" title="1 of 2 branches missed.">        if (pnBtSuperior == null) {</span>
+<span class="fc" id="L274">            pnBtSuperior = new JPanel();</span>
+<span class="fc" id="L275">            pnBtSuperior.add(getBtCrear());</span>
+<span class="fc" id="L276">            pnBtSuperior.add(getBtActualizar());</span>
+<span class="fc" id="L277">            pnBtSuperior.add(getBtEliminar());</span>
+        }
+<span class="fc" id="L279">        return pnBtSuperior;</span>
+    }
+
+    public JButton getBtCrear() {
+<span class="pc bpc" id="L283" title="1 of 2 branches missed.">        if (btCrear == null) {</span>
+<span class="fc" id="L284">            btCrear = new JButton(&quot;Crear&quot;);</span>
+<span class="fc" id="L285">            btCrear.addActionListener(new ActionListener() {</span>
+                public void actionPerformed(ActionEvent arg0) {
+<span class="pc bpc" id="L287" title="1 of 2 branches missed.">                    if (getChckbxEditar().isSelected()) {</span>
+
+<span class="fc" id="L289">                        String campoID = getTxId().getText();</span>
+<span class="fc" id="L290">                        String campoMarca = getTxMarca().getText();</span>
+<span class="fc" id="L291">                        String campoModelo = getTxModelo().getText();</span>
+<span class="fc" id="L292">                        String campoValor = getTxValor().getText();</span>
+
+<span class="pc bpc" id="L294" title="4 of 8 branches missed.">                        if (!(campoID.isEmpty() &amp;&amp; campoMarca.isEmpty() &amp;&amp; campoModelo.isEmpty() &amp;&amp; campoValor.isEmpty())) {</span>
+<span class="nc" id="L295">                            Objeto_Casa objetoACrear = new Objeto_Casa(campoID, campoMarca, campoModelo, campoValor, casa);</span>
+<span class="nc bnc" id="L296" title="All 4 branches missed.">                            if (modelObjetos.isEmpty() || !doesItContain(objetoACrear, modelObjetos)) {</span>
+<span class="nc" id="L297">                                modelObjetos.addElement(objetoACrear);</span>
+<span class="nc" id="L298">                                casa.agregar_objeto(objetoACrear);</span>
+                            } else {
+<span class="nc" id="L300">                                JOptionPane.showMessageDialog(null,</span>
+                                        &quot;Ya existe un objeto con el mismo ID en la lista. Por favor, introduce otro ID&quot;);
+                            }
+                        }
+                    }
+<span class="fc" id="L305">                }</span>
+            });
+        }
+<span class="fc" id="L308">        return btCrear;</span>
+    }
+
+    public boolean doesItContain(Objeto_Casa objetoAComprobar, DefaultListModel&lt;Objeto_Casa&gt; modeloDeBusqueda) {
+<span class="pc bfc" id="L312" title="All 2 branches covered.">        for (int i = 0; i &lt; modeloDeBusqueda.size(); i++) {</span>
+<span class="pc bpc" id="L313" title="1 of 2 branches missed.">            if (modeloDeBusqueda.get(i).getID().equals(objetoAComprobar.getID())) {</span>
+<span class="fc" id="L314">                return true;</span>
+            }
+        }
+<span class="fc" id="L317">        return false;</span>
+    }
+
+    public JButton getBtActualizar() {
+<span class="pc bpc" id="L321" title="1 of 2 branches missed.">        if (btActualizar == null) {</span>
+<span class="fc" id="L322">            btActualizar = new JButton(&quot;Actualizar&quot;);</span>
+<span class="fc" id="L323">            btActualizar.addActionListener(new ActionListener() {</span>
+                public void actionPerformed(ActionEvent arg0) {
+<span class="pc bpc" id="L325" title="1 of 2 branches missed.">                    if (!listObjetos.isSelectionEmpty()) {</span>
+<span class="nc" id="L326">                        Objeto_Casa objetoActualizable = modelObjetos.get(listObjetos.getSelectedIndex());</span>
+<span class="nc" id="L327">                        actualizarValores(objetoActualizable);</span>
+<span class="nc" id="L328">                    } else {</span>
+<span class="fc" id="L329">                        JOptionPane.showMessageDialog(null, &quot;Por favor, selecciona &quot; +</span>
+                                &quot;un elemento de la lista para actualizar la información.&quot;);
+                    }
+
+<span class="fc" id="L333">                }</span>
+            });
+        }
+<span class="fc" id="L336">        return btActualizar;</span>
+    }
+
+    public void actualizarValores(Objeto_Casa objetoActualizable) {
+<span class="fc" id="L340">        String idActualizado = objetoActualizable.getInfo()[0];</span>
+<span class="fc" id="L341">        String marcaActualizada = objetoActualizable.getInfo()[1];</span>
+<span class="fc" id="L342">        String modeloActualizado = objetoActualizable.getInfo()[2];</span>
+<span class="fc" id="L343">        String valorActualizado = objetoActualizable.getInfo()[3];</span>
+
+<span class="fc" id="L345">        getTxId().setText(idActualizado);</span>
+<span class="fc" id="L346">        getTxMarca().setText(marcaActualizada);</span>
+<span class="fc" id="L347">        getTxModelo().setText(modeloActualizado);</span>
+<span class="fc" id="L348">        getTxValor().setText(valorActualizado);</span>
+
+<span class="fc" id="L350">        objetoActualizable.calculate_next_pos(Ruta.COTA_DE_DESPLAZAMIENTO_X, Ruta.COTA_DE_DESPLAZAMIENTO_Y);</span>
+
+<span class="fc" id="L352">        String valorPosXActualizado = objetoActualizable.getInfo()[4];</span>
+<span class="fc" id="L353">        String valorPosYActualizado = objetoActualizable.getInfo()[5];</span>
+
+<span class="fc" id="L355">        getTxPosicionX().setText(valorPosXActualizado);</span>
+<span class="fc" id="L356">        getTxPosicionY().setText(valorPosYActualizado);</span>
+<span class="fc" id="L357">    }</span>
+
+    public JButton getBtEliminar() {
+<span class="pc bpc" id="L360" title="1 of 2 branches missed.">        if (btEliminar == null) {</span>
+<span class="fc" id="L361">            btEliminar = new JButton(&quot;Eliminar&quot;);</span>
+<span class="fc" id="L362">            btEliminar.addActionListener(new ActionListener() {</span>
+                public void actionPerformed(ActionEvent arg0) {
+<span class="pc bpc" id="L364" title="1 of 2 branches missed.">                    if (!listObjetos.isSelectionEmpty()) {</span>
+<span class="nc" id="L365">                        Objeto_Casa objetoABorrar = listObjetos.getSelectedValue();</span>
+<span class="nc" id="L366">                        modelObjetos.removeElement(objetoABorrar);</span>
+<span class="nc" id="L367">                        casa.eliminar_objeto(objetoABorrar);</span>
+<span class="nc" id="L368">                        vaciarCampos();</span>
+<span class="nc" id="L369">                    } else {</span>
+<span class="fc" id="L370">                        JOptionPane.showMessageDialog(null, &quot;Puede que la lista &quot; +</span>
+                                &quot;se encuentre vacía o no haya seleccionado ningún elemento.&quot;);
+                    }
+<span class="fc" id="L373">                }</span>
+            });
+        }
+<span class="fc" id="L376">        return btEliminar;</span>
+    }
+
+    public void vaciarCampos() {
+<span class="fc" id="L380">        getTxId().setText(&quot;&quot;);</span>
+<span class="fc" id="L381">        getTxMarca().setText(&quot;&quot;);</span>
+<span class="fc" id="L382">        getTxModelo().setText(&quot;&quot;);</span>
+<span class="fc" id="L383">        getTxValor().setText(&quot;&quot;);</span>
+<span class="fc" id="L384">        getTxPosicionX().setText(&quot;&quot;);</span>
+<span class="fc" id="L385">        getTxPosicionY().setText(&quot;&quot;);</span>
+<span class="fc" id="L386">    }</span>
+
+    public JLabel getLbInformacionObjetos() {
+<span class="pc bpc" id="L389" title="1 of 2 branches missed.">        if (lbInformacionObjetos == null) {</span>
+<span class="fc" id="L390">            lbInformacionObjetos = new JLabel(&quot;Informacion del objeto:&quot;);</span>
+<span class="fc" id="L391">            lbInformacionObjetos.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L392">            lbInformacionObjetos.setFont(new Font(&quot;Sylfaen&quot;, Font.BOLD, 22));</span>
+        }
+<span class="fc" id="L394">        return lbInformacionObjetos;</span>
+    }
+
+    public JPanel getPnCampos() {
+<span class="pc bpc" id="L398" title="1 of 2 branches missed.">        if (pnCampos == null) {</span>
+<span class="fc" id="L399">            pnCampos = new JPanel();</span>
+<span class="fc" id="L400">            pnCampos.setToolTipText(&quot;Cuando esta opci\u00F3n est\u00E1 deshabilitada, solo podr\u00E1 mostrarse la informaci\u00F3n. En caso contrario, se podr\u00E1n modificar los campos.&quot;);</span>
+<span class="fc" id="L401">            GridBagLayout gbl_pnCampos = new GridBagLayout();</span>
+<span class="fc" id="L402">            gbl_pnCampos.columnWidths = new int[]{119, 223, 0};</span>
+<span class="fc" id="L403">            gbl_pnCampos.rowHeights = new int[]{60, 60, 60, 60, 60, 0};</span>
+<span class="fc" id="L404">            gbl_pnCampos.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};</span>
+<span class="fc" id="L405">            gbl_pnCampos.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};</span>
+<span class="fc" id="L406">            pnCampos.setLayout(gbl_pnCampos);</span>
+<span class="fc" id="L407">            GridBagConstraints gbc_lbId = new GridBagConstraints();</span>
+<span class="fc" id="L408">            gbc_lbId.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L409">            gbc_lbId.insets = new Insets(0, 0, 5, 5);</span>
+<span class="fc" id="L410">            gbc_lbId.gridx = 0;</span>
+<span class="fc" id="L411">            gbc_lbId.gridy = 0;</span>
+<span class="fc" id="L412">            pnCampos.add(getLbId(), gbc_lbId);</span>
+<span class="fc" id="L413">            GridBagConstraints gbc_txId = new GridBagConstraints();</span>
+<span class="fc" id="L414">            gbc_txId.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L415">            gbc_txId.insets = new Insets(0, 0, 5, 0);</span>
+<span class="fc" id="L416">            gbc_txId.gridx = 1;</span>
+<span class="fc" id="L417">            gbc_txId.gridy = 0;</span>
+<span class="fc" id="L418">            pnCampos.add(getTxId(), gbc_txId);</span>
+<span class="fc" id="L419">            GridBagConstraints gbc_lbMarca = new GridBagConstraints();</span>
+<span class="fc" id="L420">            gbc_lbMarca.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L421">            gbc_lbMarca.insets = new Insets(0, 0, 5, 5);</span>
+<span class="fc" id="L422">            gbc_lbMarca.gridx = 0;</span>
+<span class="fc" id="L423">            gbc_lbMarca.gridy = 1;</span>
+<span class="fc" id="L424">            pnCampos.add(getLbMarca(), gbc_lbMarca);</span>
+<span class="fc" id="L425">            GridBagConstraints gbc_txMarca = new GridBagConstraints();</span>
+<span class="fc" id="L426">            gbc_txMarca.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L427">            gbc_txMarca.insets = new Insets(0, 0, 5, 0);</span>
+<span class="fc" id="L428">            gbc_txMarca.gridx = 1;</span>
+<span class="fc" id="L429">            gbc_txMarca.gridy = 1;</span>
+<span class="fc" id="L430">            pnCampos.add(getTxMarca(), gbc_txMarca);</span>
+<span class="fc" id="L431">            GridBagConstraints gbc_lbModelo = new GridBagConstraints();</span>
+<span class="fc" id="L432">            gbc_lbModelo.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L433">            gbc_lbModelo.insets = new Insets(0, 0, 5, 5);</span>
+<span class="fc" id="L434">            gbc_lbModelo.gridx = 0;</span>
+<span class="fc" id="L435">            gbc_lbModelo.gridy = 2;</span>
+<span class="fc" id="L436">            pnCampos.add(getLbModelo(), gbc_lbModelo);</span>
+<span class="fc" id="L437">            GridBagConstraints gbc_txModelo = new GridBagConstraints();</span>
+<span class="fc" id="L438">            gbc_txModelo.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L439">            gbc_txModelo.insets = new Insets(0, 0, 5, 0);</span>
+<span class="fc" id="L440">            gbc_txModelo.gridx = 1;</span>
+<span class="fc" id="L441">            gbc_txModelo.gridy = 2;</span>
+<span class="fc" id="L442">            pnCampos.add(getTxModelo(), gbc_txModelo);</span>
+<span class="fc" id="L443">            GridBagConstraints gbc_lbValor = new GridBagConstraints();</span>
+<span class="fc" id="L444">            gbc_lbValor.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L445">            gbc_lbValor.insets = new Insets(0, 0, 5, 5);</span>
+<span class="fc" id="L446">            gbc_lbValor.gridx = 0;</span>
+<span class="fc" id="L447">            gbc_lbValor.gridy = 3;</span>
+<span class="fc" id="L448">            pnCampos.add(getLbValor(), gbc_lbValor);</span>
+<span class="fc" id="L449">            GridBagConstraints gbc_txValor = new GridBagConstraints();</span>
+<span class="fc" id="L450">            gbc_txValor.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L451">            gbc_txValor.insets = new Insets(0, 0, 5, 0);</span>
+<span class="fc" id="L452">            gbc_txValor.gridx = 1;</span>
+<span class="fc" id="L453">            gbc_txValor.gridy = 3;</span>
+<span class="fc" id="L454">            pnCampos.add(getTxValor(), gbc_txValor);</span>
+<span class="fc" id="L455">            GridBagConstraints gbc_separator = new GridBagConstraints();</span>
+<span class="fc" id="L456">            gbc_separator.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L457">            gbc_separator.insets = new Insets(0, 0, 0, 5);</span>
+<span class="fc" id="L458">            gbc_separator.gridx = 0;</span>
+<span class="fc" id="L459">            gbc_separator.gridy = 4;</span>
+<span class="fc" id="L460">            pnCampos.add(getSeparator(), gbc_separator);</span>
+<span class="fc" id="L461">            GridBagConstraints gbc_chckbxEditar = new GridBagConstraints();</span>
+<span class="fc" id="L462">            gbc_chckbxEditar.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L463">            gbc_chckbxEditar.gridx = 1;</span>
+<span class="fc" id="L464">            gbc_chckbxEditar.gridy = 4;</span>
+<span class="fc" id="L465">            pnCampos.add(getChckbxEditar(), gbc_chckbxEditar);</span>
+        }
+<span class="fc" id="L467">        return pnCampos;</span>
+    }
+
+    public JPanel getPnPosiciones() {
+<span class="pc bpc" id="L471" title="1 of 2 branches missed.">        if (pnPosiciones == null) {</span>
+<span class="fc" id="L472">            pnPosiciones = new JPanel();</span>
+<span class="fc" id="L473">            GridBagLayout gbl_pnPosiciones = new GridBagLayout();</span>
+<span class="fc" id="L474">            gbl_pnPosiciones.columnWidths = new int[]{104, 137, 94, 137, 0};</span>
+<span class="fc" id="L475">            gbl_pnPosiciones.rowHeights = new int[]{20, 0};</span>
+<span class="fc" id="L476">            gbl_pnPosiciones.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};</span>
+<span class="fc" id="L477">            gbl_pnPosiciones.rowWeights = new double[]{0.0, Double.MIN_VALUE};</span>
+<span class="fc" id="L478">            pnPosiciones.setLayout(gbl_pnPosiciones);</span>
+<span class="fc" id="L479">            GridBagConstraints gbc_lbPosicionX = new GridBagConstraints();</span>
+<span class="fc" id="L480">            gbc_lbPosicionX.insets = new Insets(0, 0, 0, 5);</span>
+<span class="fc" id="L481">            gbc_lbPosicionX.gridx = 0;</span>
+<span class="fc" id="L482">            gbc_lbPosicionX.gridy = 0;</span>
+<span class="fc" id="L483">            pnPosiciones.add(getLbPosicionX(), gbc_lbPosicionX);</span>
+<span class="fc" id="L484">            GridBagConstraints gbc_txPosicionX = new GridBagConstraints();</span>
+<span class="fc" id="L485">            gbc_txPosicionX.fill = GridBagConstraints.HORIZONTAL;</span>
+<span class="fc" id="L486">            gbc_txPosicionX.insets = new Insets(0, 0, 0, 5);</span>
+<span class="fc" id="L487">            gbc_txPosicionX.gridx = 1;</span>
+<span class="fc" id="L488">            gbc_txPosicionX.gridy = 0;</span>
+<span class="fc" id="L489">            pnPosiciones.add(getTxPosicionX(), gbc_txPosicionX);</span>
+<span class="fc" id="L490">            GridBagConstraints gbc_lbPosicionY = new GridBagConstraints();</span>
+<span class="fc" id="L491">            gbc_lbPosicionY.insets = new Insets(0, 0, 0, 5);</span>
+<span class="fc" id="L492">            gbc_lbPosicionY.gridx = 2;</span>
+<span class="fc" id="L493">            gbc_lbPosicionY.gridy = 0;</span>
+<span class="fc" id="L494">            pnPosiciones.add(getLbPosicionY(), gbc_lbPosicionY);</span>
+<span class="fc" id="L495">            GridBagConstraints gbc_txPosicionY = new GridBagConstraints();</span>
+<span class="fc" id="L496">            gbc_txPosicionY.fill = GridBagConstraints.HORIZONTAL;</span>
+<span class="fc" id="L497">            gbc_txPosicionY.gridx = 3;</span>
+<span class="fc" id="L498">            gbc_txPosicionY.gridy = 0;</span>
+<span class="fc" id="L499">            pnPosiciones.add(getTxPosicionY(), gbc_txPosicionY);</span>
+        }
+<span class="fc" id="L501">        return pnPosiciones;</span>
+    }
+
+    public JLabel getLbId() {
+<span class="pc bpc" id="L505" title="1 of 2 branches missed.">        if (lbId == null) {</span>
+<span class="fc" id="L506">            lbId = new JLabel(&quot;ID: &quot;);</span>
+<span class="fc" id="L507">            lbId.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L508">            lbId.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
+        }
+<span class="fc" id="L510">        return lbId;</span>
+    }
+
+    public JTextField getTxId() {
+<span class="fc bfc" id="L514" title="All 2 branches covered.">        if (txId == null) {</span>
+<span class="fc" id="L515">            txId = new JTextField();</span>
+<span class="fc" id="L516">            txId.setColumns(10);</span>
+        }
+<span class="fc" id="L518">        return txId;</span>
+    }
+
+    public JLabel getLbMarca() {
+<span class="pc bpc" id="L522" title="1 of 2 branches missed.">        if (lbMarca == null) {</span>
+<span class="fc" id="L523">            lbMarca = new JLabel(&quot;Marca: &quot;);</span>
+<span class="fc" id="L524">            lbMarca.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L525">            lbMarca.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
+        }
+<span class="fc" id="L527">        return lbMarca;</span>
+    }
+
+    public JTextField getTxMarca() {
+<span class="fc bfc" id="L531" title="All 2 branches covered.">        if (txMarca == null) {</span>
+<span class="fc" id="L532">            txMarca = new JTextField();</span>
+<span class="fc" id="L533">            txMarca.setFont(new Font(&quot;Tahoma&quot;, Font.PLAIN, 11));</span>
+<span class="fc" id="L534">            txMarca.setColumns(10);</span>
+        }
+<span class="fc" id="L536">        return txMarca;</span>
+    }
+
+    public JLabel getLbModelo() {
+<span class="pc bpc" id="L540" title="1 of 2 branches missed.">        if (lbModelo == null) {</span>
+<span class="fc" id="L541">            lbModelo = new JLabel(&quot;Modelo:&quot;);</span>
+<span class="fc" id="L542">            lbModelo.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L543">            lbModelo.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
+        }
+<span class="fc" id="L545">        return lbModelo;</span>
+    }
+
+    public JTextField getTxModelo() {
+<span class="fc bfc" id="L549" title="All 2 branches covered.">        if (txModelo == null) {</span>
+<span class="fc" id="L550">            txModelo = new JTextField();</span>
+<span class="fc" id="L551">            txModelo.setColumns(10);</span>
+        }
+<span class="fc" id="L553">        return txModelo;</span>
+    }
+
+    public JLabel getLbValor() {
+<span class="pc bpc" id="L557" title="1 of 2 branches missed.">        if (lbValor == null) {</span>
+<span class="fc" id="L558">            lbValor = new JLabel(&quot;Valor: &quot;);</span>
+<span class="fc" id="L559">            lbValor.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L560">            lbValor.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
+        }
+<span class="fc" id="L562">        return lbValor;</span>
+    }
+
+    public JTextField getTxValor() {
+<span class="fc bfc" id="L566" title="All 2 branches covered.">        if (txValor == null) {</span>
+<span class="fc" id="L567">            txValor = new JTextField();</span>
+<span class="fc" id="L568">            txValor.setColumns(10);</span>
+        }
+<span class="fc" id="L570">        return txValor;</span>
+    }
+
+    public JCheckBox getChckbxEditar() {
+<span class="fc bfc" id="L574" title="All 2 branches covered.">        if (chckbxEditar == null) {</span>
+<span class="fc" id="L575">            chckbxEditar = new JCheckBox(&quot;Editar&quot;);</span>
+<span class="fc" id="L576">            chckbxEditar.addActionListener(new ActionListener() {</span>
+                public void actionPerformed(ActionEvent arg0) {
+<span class="nc" id="L578">                    boolean isSelected = getChckbxEditar().isSelected();</span>
+<span class="nc" id="L579">                    getTxId().setEditable(isSelected);</span>
+<span class="nc" id="L580">                    getTxMarca().setEditable(isSelected);</span>
+<span class="nc" id="L581">                    getTxModelo().setEditable(isSelected);</span>
+<span class="nc" id="L582">                    getTxValor().setEditable(isSelected);</span>
+<span class="nc" id="L583">                }</span>
+            });
+<span class="fc" id="L585">            chckbxEditar.setHorizontalAlignment(SwingConstants.RIGHT);</span>
+<span class="fc" id="L586">            chckbxEditar.setSelected(true);</span>
+        }
+<span class="fc" id="L588">        return chckbxEditar;</span>
+    }
+
+    public JSeparator getSeparator() {
+<span class="pc bpc" id="L592" title="1 of 2 branches missed.">        if (separator == null) {</span>
+<span class="fc" id="L593">            separator = new JSeparator();</span>
+<span class="fc" id="L594">            separator.setForeground(SystemColor.scrollbar);</span>
+        }
+<span class="fc" id="L596">        return separator;</span>
+    }
+
+    public JLabel getLbPosicionX() {
+<span class="pc bpc" id="L600" title="1 of 2 branches missed.">        if (lbPosicionX == null) {</span>
+<span class="fc" id="L601">            lbPosicionX = new JLabel(&quot;Posicion X: &quot;);</span>
+<span class="fc" id="L602">            lbPosicionX.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L603">            lbPosicionX.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
+        }
+<span class="fc" id="L605">        return lbPosicionX;</span>
+    }
+
+    public JTextField getTxPosicionX() {
+<span class="fc bfc" id="L609" title="All 2 branches covered.">        if (txPosicionX == null) {</span>
+<span class="fc" id="L610">            txPosicionX = new JTextField();</span>
+<span class="fc" id="L611">            txPosicionX.setEditable(false);</span>
+<span class="fc" id="L612">            txPosicionX.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L613">            txPosicionX.setColumns(10);</span>
+        }
+<span class="fc" id="L615">        return txPosicionX;</span>
+    }
+
+    public JLabel getLbPosicionY() {
+<span class="pc bpc" id="L619" title="1 of 2 branches missed.">        if (lbPosicionY == null) {</span>
+<span class="fc" id="L620">            lbPosicionY = new JLabel(&quot;Posicion Y: &quot;);</span>
+<span class="fc" id="L621">            lbPosicionY.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L622">            lbPosicionY.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
+        }
+<span class="fc" id="L624">        return lbPosicionY;</span>
+    }
+
+    public JTextField getTxPosicionY() {
+<span class="fc bfc" id="L628" title="All 2 branches covered.">        if (txPosicionY == null) {</span>
+<span class="fc" id="L629">            txPosicionY = new JTextField();</span>
+<span class="fc" id="L630">            txPosicionY.setEditable(false);</span>
+<span class="fc" id="L631">            txPosicionY.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L632">            txPosicionY.setColumns(10);</span>
+        }
+<span class="fc" id="L634">        return txPosicionY;</span>
+    }
+
+    public VentanaPrincipal getReferenciaThis() {
+<span class="fc" id="L638">        return this;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

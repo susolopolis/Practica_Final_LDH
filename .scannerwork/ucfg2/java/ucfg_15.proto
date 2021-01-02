@@ -1,0 +1,92 @@
+
+0Objetos.Casa#eliminar_objetos(Ljava/util/List;)Z\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java* *(#"2*Î
+2\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java+ +('—
+”
+\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java+ +('&
+objetoAEliminarObjetos.Objeto_Casa"__id*
+""È
+Å
+\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java+ +('&
+objetoAEliminarObjetos.Objeto_Casa"
+__arrayGet*)
+'
+listaObjetosAEliminarjava.util.List*
+""*
+6
+1*¼
+3\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java, ,()•
+’
+\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java, ,()$
+objetoABuscarObjetos.Objeto_Casa"__id*
+""¸
+µ
+\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java, ,()$
+objetoABuscarObjetos.Objeto_Casa"
+__arrayGet*
+
+%0java.util.ArrayList*
+""*
+2
+5*ò
+4\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java. .(¡
+ž
+\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java. .(
+%4java.util.ArrayList"__id**
+Objetos.Casa"	
+objetos‚ÿ
+\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java. .(1
+%5boolean"/java.util.ArrayList#remove(Ljava/lang/Object;)Z*
+
+%4java.util.ArrayList*&
+$
+objetoABuscarObjetos.Objeto_Casa2remove(Ljava/lang/Object;)"f
+\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java/ /( 
+""*”
+5\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java- -( ÙÖ
+\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java- -((
+%1java.lang.String"-Objetos.Objeto_Casa#getID()Ljava/lang/String;*&
+$
+objetoABuscarObjetos.Objeto_Casa2getID()ÛØ
+\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java-0 -(G
+%2java.lang.String"-Objetos.Objeto_Casa#getID()Ljava/lang/String;*(
+&
+objetoAEliminarObjetos.Objeto_Casa2getID()îë
+\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java- -(H
+%3boolean",java.lang.String#equals(Ljava/lang/Object;)Z*
+
+%1java.lang.String*
+
+%2java.lang.String2equals(Ljava/lang/Object;)*
+3
+4*Š
+6\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java,, ,(3¡
+ž
+\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java,, ,(3
+%0java.util.ArrayList"__id**
+Objetos.Casa"	
+objetos*
+3*É
+1\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java3 3("f
+\
+RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java3 3(
+"":'
+listaObjetosAEliminarjava.util.ListB
+Objetos.Casa

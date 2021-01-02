@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.manning.junitbook</groupId>
-    <artifactId>ch13-continuous</artifactId>
+    <artifactId>Practica_Final_LDH</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>ch13-continuous</name>
+    <name>Practica_Final_LDH</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -45,12 +45,6 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
-                        <configuration>
-                            <excludes>
-                                <exclude>src/test/es/ull/flights/FlightTest.class</exclude>
-                                <exclude>src/test/es/ull/passengers/PassengerTest.class</exclude>
-                            </excludes>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

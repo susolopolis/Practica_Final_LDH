@@ -1,0 +1,90 @@
+
+BEjecutar.VentanaPrincipal#getTxPosicionX()Ljavax/swing/JTextField;k
+_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaä ä($"3*¾
+2k
+_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaæ æ(*¦£
+k
+_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaæ æ((
+%1javax.swing.JTextField"javax.swing.JTextField¸
+µ
+k
+_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaæ æ(*
+%2" javax.swing.JTextField#<init>()V*
+
+%1javax.swing.JTextFieldÄ
+Á
+k
+_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaæ æ(*,
+Ejecutar.VentanaPrincipal"
+txPosicionX"__id*
+
+%1javax.swing.JTextFieldÄ
+Á
+k
+_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaç ç(
+%3javax.swing.JTextField"__id*.*,
+Ejecutar.VentanaPrincipal"
+txPosicionXåâ
+k
+_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaç ç(*
+
+%4void"/javax.swing.text.JTextComponent#setEditable(Z)V*
+
+%3javax.swing.JTextField*
+""2setEditable(Z)Ä
+Á
+k
+_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaè è(
+%5javax.swing.JTextField"__id*.*,
+Ejecutar.VentanaPrincipal"
+txPosicionX‰
+†
+k
+_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaè/ è(D	
+%6int"__id*
+""÷ô
+k
+_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaè è(E
+
+%7void"1javax.swing.JTextField#setHorizontalAlignment(I)V*
+
+%5javax.swing.JTextField*
+	
+%6int2setHorizontalAlignment(I)Ä
+Á
+k
+_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaé é(
+%8javax.swing.JTextField"__id*.*,
+Ejecutar.VentanaPrincipal"
+txPosicionXØÕ
+k
+_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaé é(&
+
+%9void"%javax.swing.JTextField#setColumns(I)V*
+
+%8javax.swing.JTextField*2
+2setColumns(I)*
+1*¿
+3k
+_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaå å(Ä
+Á
+k
+_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaå å(
+%0javax.swing.JTextField"__id*.*,
+Ejecutar.VentanaPrincipal"
+txPosicionX*
+2
+1*É
+1k
+_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaë ë(Å
+Â
+k
+_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaë ë(
+%10javax.swing.JTextField"__id*.*,
+Ejecutar.VentanaPrincipal"
+txPosicionX"Ž
+k
+_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaë ë(
+
+%10javax.swing.JTextFieldB
+Ejecutar.VentanaPrincipal

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Objeto_Casa.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Practica_Final_LDH</a> &gt; <a href="index.source.html" class="el_package">Objetos</a> &gt; <span class="el_source">Objeto_Casa.java</span></div><h1>Objeto_Casa.java</h1><pre class="source lang-java linenums">package Objetos;
+
+public class Objeto_Casa{
+
+
+    //VARIABLES DE APARATOS ELECTRONICOS//
+    //COMPROBAR QUE EL IDENTIFICADOR SEA UNICO: VA A SER,POR EJEMPLO, &quot;SMARTPHONE DE JESUS&quot;
+
+    private final String ID;
+    private String marca;
+    private String modelo;
+    private String valor;
+    private Ruta ruta;
+
+<span class="fc" id="L15">    public Objeto_Casa(String ID,String marca, String modelo,String valor, Casa casa){</span>
+<span class="fc" id="L16">        this.ID = ID;</span>
+<span class="fc" id="L17">        this.marca = marca;</span>
+<span class="fc" id="L18">        this.modelo = modelo;</span>
+<span class="fc" id="L19">        this.valor = valor;</span>
+<span class="fc" id="L20">        this.ruta = new Ruta(casa);</span>
+<span class="fc" id="L21">    }</span>
+
+    public void setObjeto(Objeto_Casa nuevo_objeto){
+<span class="fc" id="L24">        this.modelo = nuevo_objeto.getModelo();</span>
+<span class="fc" id="L25">        this.marca = nuevo_objeto.getMarca();</span>
+<span class="fc" id="L26">        this.valor = nuevo_objeto.getValor();</span>
+<span class="fc" id="L27">        this.ruta = nuevo_objeto.getRuta();</span>
+<span class="fc" id="L28">    }</span>
+
+<span class="fc" id="L30">    public String getID(){return ID;}</span>
+    public String getMarca(){
+<span class="fc" id="L32">        return marca;</span>
+    }
+
+    public String getModelo(){
+<span class="fc" id="L36">        return modelo;</span>
+    }
+
+    public String getValor(){
+<span class="fc" id="L40">        return valor;</span>
+    }
+
+    public Ruta getRuta(){
+<span class="fc" id="L44">        return ruta;</span>
+    }
+
+
+    public void calculate_next_pos(int ancho,int largo) {
+<span class="fc" id="L49">        ruta.calcular_pos_actual(ancho,largo);</span>
+<span class="fc" id="L50">    }</span>
+
+    public String[] getInfo(){
+        int x,y;
+<span class="fc" id="L54">        x = ruta.get_pos_x();</span>
+<span class="fc" id="L55">        y = ruta.get_pos_y();</span>
+
+<span class="fc" id="L57">        return new String[]{this.getID() , this.getMarca(), this.getModelo()</span>
+<span class="fc" id="L58">                , this.getValor(), Integer.toString(x), Integer.toString(y)};</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L63">        return &quot;ID: &quot; + getID() + &quot; | Modelo: &quot; + getModelo();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

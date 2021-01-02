@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Ruta.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Practica_Final_LDH</a> &gt; <a href="index.source.html" class="el_package">Objetos</a> &gt; <span class="el_source">Ruta.java</span></div><h1>Ruta.java</h1><pre class="source lang-java linenums">package Objetos;
+
+import java.util.Random;
+
+public class Ruta {
+
+    public static final int COTA_DE_DESPLAZAMIENTO_X = 100;
+    public static final int COTA_DE_DESPLAZAMIENTO_Y = 45;
+
+    private int pos_actual_x;
+    private int pos_actual_y;
+
+    private Casa casa;
+
+
+<span class="fc" id="L16">    public Ruta(){</span>
+<span class="fc" id="L17">        pos_actual_x = 0;</span>
+<span class="fc" id="L18">        pos_actual_y = 0;</span>
+<span class="fc" id="L19">    }</span>
+
+    public Ruta(Casa casa){
+<span class="fc" id="L22">        this();</span>
+<span class="fc" id="L23">        this.casa = casa;</span>
+<span class="fc" id="L24">    }</span>
+
+    public void calcular_pos_actual(int rangoX, int rangoY){
+<span class="fc" id="L27">        Random ran1 = new Random();</span>
+<span class="fc" id="L28">        Random ran2 = new Random();</span>
+
+        int valor_X ;
+        int valor_Y ;
+
+        double random;
+
+<span class="pc bpc" id="L35" title="1 of 4 branches missed.">        if(pos_actual_x &gt; 0 &amp;&amp; pos_actual_y &gt; 0){</span>
+            do{
+<span class="fc" id="L37">                valor_X = pos_actual_x;</span>
+<span class="fc" id="L38">                valor_Y = pos_actual_y;</span>
+
+<span class="fc" id="L40">                random = Math.random();</span>
+
+<span class="fc bfc" id="L42" title="All 2 branches covered.">                if(random &lt; 0.25){</span>
+<span class="fc" id="L43">                    valor_X += ran1.nextInt(rangoX);</span>
+<span class="fc" id="L44">                    valor_Y -= ran2.nextInt(rangoY);</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">                } else if (random &lt; 0.5){</span>
+<span class="fc" id="L46">                    valor_X -= ran1.nextInt(rangoX);</span>
+<span class="fc" id="L47">                    valor_Y += ran2.nextInt(rangoY);</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">                } else if (random &lt; 0.75){</span>
+<span class="fc" id="L49">                    valor_X -= ran1.nextInt(rangoX);</span>
+<span class="fc" id="L50">                    valor_Y -= ran2.nextInt(rangoY);</span>
+                } else {
+<span class="fc" id="L52">                    valor_X += ran1.nextInt(rangoX);</span>
+<span class="fc" id="L53">                    valor_Y += ran2.nextInt(rangoY);</span>
+                }
+<span class="fc bfc" id="L55" title="All 8 branches covered.">            } while((valor_X &lt;= 0 || valor_X &gt;= casa.getAncho()) || (valor_Y &lt;= 0 || valor_Y &gt;= casa.getLargo()));</span>
+
+        } else {
+<span class="fc" id="L58">            valor_X = ran1.nextInt(rangoX);</span>
+<span class="fc" id="L59">            valor_Y = ran2.nextInt(rangoY);</span>
+        }
+
+<span class="fc" id="L62">        pos_actual_x = valor_X;</span>
+<span class="fc" id="L63">        pos_actual_y = valor_Y;</span>
+<span class="fc" id="L64">    }</span>
+
+    public int get_pos_x(){
+<span class="fc" id="L67">        return pos_actual_x;</span>
+    }
+
+    public int get_pos_y(){
+<span class="fc" id="L71">        return pos_actual_y;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
