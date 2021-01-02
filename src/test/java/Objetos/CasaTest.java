@@ -7,22 +7,42 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+/*! Clase de test para el código comprendido en la clase Casa */
 public class CasaTest {
-    Casa casa_ejemplo = new Casa(500,300);
+    Casa casa_ejemplo = new Casa(500,300); /**< Un objeto Casa. Instancia del objeto Casa que se usará para ejecutar las pruebas sobre él. */
 
+    /**
+     * Test para comprobar la anchura de la casa.
+     *
+     * En este test se comprueba la correcta creación del objeto, de tal forma que el ancho se corresponda
+     * con su respectivo parámetro del constructor de la clase, y comprobándolo por medio de su método
+     * getter definido.
+     */
     @Test
     public void test_ancho(){
         System.out.println("Test de anchura en proceso...");
         assertEquals(500,casa_ejemplo.getAncho());
     }
 
+    /**
+     * Test para comprobar el largo de la casa.
+     *
+     * En este test se comprueba la correcta creación del objeto, de tal forma que el largo se corresponda
+     * con su respectivo parámetro del constructor de la clase, y comprobándolo por medio de su método
+     * getter definido.
+     */
     @Test
     public void test_largo(){
         System.out.println("Test de longitud en proceso...");
         assertEquals(300,casa_ejemplo.getLargo());
     }
 
+    /**
+     * Test para comprobar la adición de un objeto a la casa.
+     *
+     * En este test se realiza la operación de añadir un objeto al hogar, de tal forma que primeramente
+     * se cree un objeto y se añada a la colección de objetos disponible.
+     */
     @Test
     public void test_agregar_objeto(){
         System.out.println("Test de agregacion de objeto en proceso...");
@@ -31,6 +51,14 @@ public class CasaTest {
         casa_ejemplo.agregar_objeto(objeto);
     }
 
+    /**
+     * Test para comprobar la eliminación de un objeto del hogar.
+     *
+     * En este test se comprueba la eliminación de objetos del hogar. Primeramente se hace uso del método
+     * de adición para incorporar un nuevo elemento a la lista, y posteriormente se procede a eliminarlo
+     * dos veces. La primera vez el método ha de devolver un booleano con estado 'true', mientras que la
+     * segunda vez se ha de devolver el estado 'false'.
+     */
     @Test
     public void test_eliminar_objeto(){
         System.out.println("Test de eliminacion de objeto en proceso...");

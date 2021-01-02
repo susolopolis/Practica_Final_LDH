@@ -1,8 +1,6 @@
 package Objetos;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.Random;
-import java.security.SecureRandom;
 
 /*! Clase complementaria de la lógica que instancia una ruta para el objeto de la casa. */
 public class Ruta {

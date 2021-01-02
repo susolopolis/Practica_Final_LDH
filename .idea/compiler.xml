@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ch13-continuous" target="1.8" />
+      <module name="ch13-continuous" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
