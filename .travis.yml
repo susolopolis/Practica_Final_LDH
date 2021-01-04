@@ -9,9 +9,6 @@ jdk:
   - openjdk11
   
   
-before_install:
-    java -Djava.awt.headless=true
-  
 addons:
   sonarcloud:
     organization: "susolopolis" # the key of the org you chose at step #3
