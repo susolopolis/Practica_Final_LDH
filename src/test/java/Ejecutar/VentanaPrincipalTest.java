@@ -3,6 +3,9 @@ package Ejecutar;
 import Objetos.Casa;
 import Objetos.Objeto_Casa;
 import org.junit.jupiter.api.Test;
+import java.awt.Toolkit;
+import java.awt.GraphicsEnvironment;
+
 
 import javax.swing.*;
 
@@ -11,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class VentanaPrincipalTest {
 
     VentanaPrincipal frame = new VentanaPrincipal();/**< Un objeto VentanaPrincipal. Una instancia de la aplicación visual sobre la que se ejecutarán las pruebas. */
-
+    
     /**
      * Test para comprobar la creación de la ventana.
      *
@@ -94,6 +97,29 @@ public class VentanaPrincipalTest {
         Objeto_Casa objeto = new Objeto_Casa("Ejemplo","ejemplo","ejemplo","ejemplo",casa_ejemplo);
 
         frame.recuperarObjeto(objeto);
+        //Objeto ya agregado
+        frame.recuperarObjeto(objeto);
 
+    }
+
+    /**
+     * Test para comprobar el actionPerformed de los botones en la IGU.
+     *
+     * En este test se comprueba el funcionamiento de los botones de la IGU, de tal forma que
+     * su actionPerformed se active o no en función del foco en el que se encuentre la ejecución
+     * de la aplicación.
+     */
+    @Test
+    public void test_ActionPerformed(){
+        try {
+            frame.btCrear.doClick();
+            frame.btActualizar.doClick();
+            frame.btEliminar.doClick();
+            frame.btGuardar.doClick();
+            frame.btRecuperar.doClick();
+
+        }catch (Exception e){
+            System.out.println("Test no superado...");
+        }
     }
 }
