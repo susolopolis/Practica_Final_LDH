@@ -2,6 +2,8 @@
 
 os: linux
 dist: xenial
+services:
+  - xvfb
 
 # Project JDK
 language: java
