@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class VentanaPrincipalTest {
 
     VentanaPrincipal frame = new VentanaPrincipal();/**< Un objeto VentanaPrincipal. Una instancia de la aplicación visual sobre la que se ejecutarán las pruebas. */
-    
+
     /**
      * Test para comprobar la creación de la ventana.
      *
@@ -24,7 +24,6 @@ public class VentanaPrincipalTest {
 
     @Test
     public void test_CreacionVentana(){
-        frame.setVisible(true);
         assertNotNull(frame);
     }
 
@@ -97,9 +96,6 @@ public class VentanaPrincipalTest {
         Objeto_Casa objeto = new Objeto_Casa("Ejemplo","ejemplo","ejemplo","ejemplo",casa_ejemplo);
 
         frame.recuperarObjeto(objeto);
-        //Objeto ya agregado
-        frame.recuperarObjeto(objeto);
-
     }
 
     /**
@@ -109,17 +105,5 @@ public class VentanaPrincipalTest {
      * su actionPerformed se active o no en función del foco en el que se encuentre la ejecución
      * de la aplicación.
      */
-    @Test
-    public void test_ActionPerformed(){
-        try {
-            frame.btCrear.doClick();
-            frame.btActualizar.doClick();
-            frame.btEliminar.doClick();
-            frame.btGuardar.doClick();
-            frame.btRecuperar.doClick();
-
-        }catch (Exception e){
-            System.out.println("Test no superado...");
-        }
-    }
+    
 }
