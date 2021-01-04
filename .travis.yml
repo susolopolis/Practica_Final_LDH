@@ -10,7 +10,7 @@ jdk:
   
   
 before_install:
-    -java -Djava.awt.headless=true
+    java -Djava.awt.headless=true
   
 addons:
   sonarcloud:
