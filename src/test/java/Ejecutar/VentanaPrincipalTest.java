@@ -8,10 +8,9 @@ import javax.swing.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/*! Clase de test para el scope de la IGU del proyecto, cubriendo las operaciones realizadas en VentanaPrincipal */
 public class VentanaPrincipalTest {
 
-    VentanaPrincipal frame = new VentanaPrincipal(); /**< Un objeto VentanaPrincipal. Una instancia de la aplicación visual sobre la que se ejecutarán las pruebas. */
+    VentanaPrincipal frame = new VentanaPrincipal();/**< Un objeto VentanaPrincipal. Una instancia de la aplicación visual sobre la que se ejecutarán las pruebas. */
 
     /**
      * Test para comprobar la creación de la ventana.
@@ -19,6 +18,7 @@ public class VentanaPrincipalTest {
      * En este test se comrpueba la creación de la ventana de forma que sea visible para el usuario
      * y no sea una instancia nula.
      */
+
     @Test
     public void test_CreacionVentana(){
         frame.setVisible(true);
@@ -32,6 +32,7 @@ public class VentanaPrincipalTest {
      * Para ello se instancia un objeto Casa al igual que un Objeto_Casa y se actualizan los valores
      * para el objeto en cuestión. Se ha de controlar una posible excepción en este caso.
      */
+
     @Test
     public void test_actualizarValores(){
 
@@ -72,6 +73,7 @@ public class VentanaPrincipalTest {
      * En este test se opera la acción vaciarCampos() de tal forma que el texto de información de cada
      * objeto quede vacío y se borre la información que se estaba mostrando.
      */
+
     @Test
     public void test_vaciarCampos(){
         frame.vaciarCampos();
@@ -84,6 +86,7 @@ public class VentanaPrincipalTest {
      * modo que cuando se desee obtener un objeto de vuelta, al indicar de qué elemento se trata el método
      * sea capaz de añadir al modelo original el objeto en cuestión.
      */
+
     @Test
     public void test_recuperarObjeto(){
 

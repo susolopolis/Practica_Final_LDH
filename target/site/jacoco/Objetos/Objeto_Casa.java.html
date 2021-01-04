@@ -1,66 +1,145 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Objeto_Casa.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Practica_Final_LDH</a> &gt; <a href="index.source.html" class="el_package">Objetos</a> &gt; <span class="el_source">Objeto_Casa.java</span></div><h1>Objeto_Casa.java</h1><pre class="source lang-java linenums">package Objetos;
 
+import Ejecutar.VentanaPrincipal;
+
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class Objeto_Casa{
 
+    private final String ID; /**&lt; Una cadena. El ID del objeto. */
+    private String marca; /**&lt; Una cadena. La marca del objeto. */
+    private String modelo; /**&lt; Una cadena. El modelo del objeto. */
+    private String valor; /**&lt; Una cadena. El valor del objeto. */
+    private Ruta ruta; /**&lt; Un objeto Ruta. La ruta del objeto. */
 
-    //VARIABLES DE APARATOS ELECTRONICOS//
-    //COMPROBAR QUE EL IDENTIFICADOR SEA UNICO: VA A SER,POR EJEMPLO, &quot;SMARTPHONE DE JESUS&quot;
+    /**
+     * Constructor de la clase del objeto de la casa.
+     *
+     * En este constructor se inicializa el objeto de la Casa pasándole como parámetros el ID; la marca; el modelo;
+     * su valor; así como la referencia sobre la casa sobre la que se quiere simular su ruta.
+     * @param ID Una cadena. Valor que tomará el ID para el nuevo objeto del hogar.
+     * @param marca Una cadena. Valor que tomará la marca para el nuevo objeto del hogar.
+     * @param modelo Una cadena. Valor que tomará el modelo para el nuevo objeto del hogar.
+     * @param valor Una cadena. Valor que tomará el valor para el nuevo objeto del hogar.
+     * @param casa Un objeto Casa. Valor que tomará
+     */
+<span class="fc" id="L28">    public Objeto_Casa(String ID,String marca, String modelo,String valor, Casa casa){</span>
+<span class="fc" id="L29">        this.ID = ID;</span>
+<span class="fc" id="L30">        this.marca = marca;</span>
+<span class="fc" id="L31">        this.modelo = modelo;</span>
+<span class="fc" id="L32">        this.valor = valor;</span>
 
-    private final String ID;
-    private String marca;
-    private String modelo;
-    private String valor;
-    private Ruta ruta;
+<span class="fc" id="L34">        Logger logger=Logger.getLogger(VentanaPrincipal.class.getName());</span>
 
-<span class="fc" id="L15">    public Objeto_Casa(String ID,String marca, String modelo,String valor, Casa casa){</span>
-<span class="fc" id="L16">        this.ID = ID;</span>
-<span class="fc" id="L17">        this.marca = marca;</span>
-<span class="fc" id="L18">        this.modelo = modelo;</span>
-<span class="fc" id="L19">        this.valor = valor;</span>
-<span class="fc" id="L20">        this.ruta = new Ruta(casa);</span>
-<span class="fc" id="L21">    }</span>
+        try {
+<span class="fc" id="L37">            this.ruta = new Ruta(casa);</span>
+<span class="nc" id="L38">        } catch (NoSuchAlgorithmException e) {</span>
+<span class="nc" id="L39">            logger.log(Level.SEVERE,&quot;Excepcion&quot;);</span>
+<span class="fc" id="L40">        }</span>
+<span class="fc" id="L41">    }</span>
 
+    /**
+     * Setter del objeto de la casa.
+     *
+     * Este método establece el nuevo valor que tomarán los atributos que conforman la clase (menos el ID) en función
+     * del objeto que se le ha pasado como parámetro.
+     * @param nuevo_objeto Un objeto de tipo Objeto_Casa. El objeto del que se desean tomar los nuevos valores.
+     */
     public void setObjeto(Objeto_Casa nuevo_objeto){
-<span class="fc" id="L24">        this.modelo = nuevo_objeto.getModelo();</span>
-<span class="fc" id="L25">        this.marca = nuevo_objeto.getMarca();</span>
-<span class="fc" id="L26">        this.valor = nuevo_objeto.getValor();</span>
-<span class="fc" id="L27">        this.ruta = nuevo_objeto.getRuta();</span>
-<span class="fc" id="L28">    }</span>
+<span class="fc" id="L51">        this.modelo = nuevo_objeto.getModelo();</span>
+<span class="fc" id="L52">        this.marca = nuevo_objeto.getMarca();</span>
+<span class="fc" id="L53">        this.valor = nuevo_objeto.getValor();</span>
+<span class="fc" id="L54">        this.ruta = nuevo_objeto.getRuta();</span>
+<span class="fc" id="L55">    }</span>
 
-<span class="fc" id="L30">    public String getID(){return ID;}</span>
+    /**
+     * Getter del ID del objeto.
+     *
+     * Este método devuelve el valor que tiene el objeto de la casa para el atributo 'ID'.
+     * @return El ID del objeto.
+     */
+<span class="fc" id="L63">    public String getID(){return ID;}</span>
+
+    /**
+     * Getter de la marca del objeto.
+     *
+     * Este método devuelve el valor que tiene el objeto de la casa para el atributo 'marca'.
+     * @return La marca del objeto.
+     */
     public String getMarca(){
-<span class="fc" id="L32">        return marca;</span>
+<span class="fc" id="L72">        return marca;</span>
     }
 
+    /**
+     * Getter del modelo del objeto.
+     *
+     * Este método devuelve el valor que tiene el objeto de la casa para el atributo 'modelo'.
+     * @return El modelo del objeto.
+     */
     public String getModelo(){
-<span class="fc" id="L36">        return modelo;</span>
+<span class="fc" id="L82">        return modelo;</span>
     }
 
+    /**
+     * Getter para el valor del objeto.
+     *
+     * Este método devuelve el valor que tiene el objeto de la casa para el atributo 'valor'.
+     * @return El valor del objeto.
+     */
     public String getValor(){
-<span class="fc" id="L40">        return valor;</span>
+<span class="fc" id="L92">        return valor;</span>
     }
 
+    /**
+     * Getter de la ruta del objeto.
+     *
+     * Este método devuelve el valor que tiene el objeto de la casa para el atributo 'ruta'.
+     * @return La ruta del objeto.
+     */
     public Ruta getRuta(){
-<span class="fc" id="L44">        return ruta;</span>
+<span class="fc" id="L102">        return ruta;</span>
     }
 
-
+    /**
+     * Método que permite calcular la siguiente posición del objeto.
+     *
+     * En este método se implementa la acción de simulación de movimiento del objeto, de tal forma que en base al
+     * ancho y largo indicados, accediendo a la ruta del objeto se ejecuta la operación correspondiente y se actualiza
+     * el valor que toma.
+     * @param ancho Un entero. Las dimensiones del ancho de la casa en la que se encuentra el objeto.
+     * @param largo Un entero. Las dimensiones del largo de la casa en la que se encuentra el objeto.
+     */
     public void calculate_next_pos(int ancho,int largo) {
-<span class="fc" id="L49">        ruta.calcular_pos_actual(ancho,largo);</span>
-<span class="fc" id="L50">    }</span>
+<span class="fc" id="L115">        ruta.calcular_pos_actual(ancho,largo);</span>
+<span class="fc" id="L116">    }</span>
 
+    /**
+     * Getter sobre la información del objeto.
+     *
+     * Este método devuelve un array de String que contendrá por orden los valores que tiene el objeto para el ID, marca,
+     *  modelo, valor, posición X y posición Y respectivamente.
+     * @return La información sobre el objeto indexada en un array de String.
+     */
     public String[] getInfo(){
         int x,y;
-<span class="fc" id="L54">        x = ruta.get_pos_x();</span>
-<span class="fc" id="L55">        y = ruta.get_pos_y();</span>
+<span class="fc" id="L127">        x = ruta.get_pos_x();</span>
+<span class="fc" id="L128">        y = ruta.get_pos_y();</span>
 
-<span class="fc" id="L57">        return new String[]{this.getID() , this.getMarca(), this.getModelo()</span>
-<span class="fc" id="L58">                , this.getValor(), Integer.toString(x), Integer.toString(y)};</span>
+<span class="fc" id="L130">        return new String[]{this.getID() , this.getMarca(), this.getModelo()</span>
+<span class="fc" id="L131">                , this.getValor(), Integer.toString(x), Integer.toString(y)};</span>
     }
 
+    /**
+     * Redefinición del método toString del objeto del hogar.
+     *
+     * En esta reimplementación se devuelve una cadena que únicamente indique el estado del atributo 'ID' y 'modelo'.
+     * @return Una cadena con la información sobre ID y modelo del objeto del hogar.
+     */
     @Override
     public String toString() {
-<span class="fc" id="L63">        return &quot;ID: &quot; + getID() + &quot; | Modelo: &quot; + getModelo();</span>
+<span class="fc" id="L142">        return &quot;ID: &quot; + getID() + &quot; | Modelo: &quot; + getModelo();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

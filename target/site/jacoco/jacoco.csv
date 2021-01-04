@@ -1,12 +1,12 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 Practica_Final_LDH,Objetos,Casa,2,146,1,15,0,33,1,15,0,8
-Practica_Final_LDH,Objetos,Ruta,0,136,1,17,0,32,1,13,0,5
-Practica_Final_LDH,Objetos,Objeto_Casa,0,115,0,0,0,24,0,10,0,10
-Practica_Final_LDH,Ejecutar,VentanaPrincipal,7,1585,23,43,2,308,24,46,1,36
+Practica_Final_LDH,Objetos,Ruta,0,147,3,15,0,32,3,11,0,5
+Practica_Final_LDH,Objetos,Objeto_Casa,5,120,0,0,2,26,0,10,0,10
+Practica_Final_LDH,Ejecutar,VentanaPrincipal,12,1585,24,42,3,308,25,45,1,36
 Practica_Final_LDH,Ejecutar,VentanaPrincipal.new ActionListener() {...},57,12,5,1,9,3,3,2,0,2
 Practica_Final_LDH,Ejecutar,VentanaPrincipal.new ActionListener() {...},11,31,1,1,2,6,1,2,0,2
 Practica_Final_LDH,Ejecutar,VentanaPrincipal.new ListSelectionListener() {...},18,6,2,0,3,1,2,1,1,1
-Practica_Final_LDH,Ejecutar,VentanaPrincipal.new Runnable() {...},15,0,0,0,7,0,2,0,2,0
+Practica_Final_LDH,Ejecutar,VentanaPrincipal.new Runnable() {...},21,0,0,0,7,0,2,0,2,0
 Practica_Final_LDH,Ejecutar,VentanaPrincipal.new ActionListener() {...},26,6,0,0,6,1,1,1,1,1
 Practica_Final_LDH,Ejecutar,VentanaPrincipal.new ActionListener() {...},22,15,1,1,5,4,1,2,0,2
 Practica_Final_LDH,Ejecutar,VentanaPrincipal.new ActionListener() {...},15,15,1,1,3,4,1,2,0,2

@@ -18,8 +18,8 @@ import java.awt.Toolkit;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
-/*! Clase de la ventana principal de la aplicación */
+import java.util.logging.Level;
+import java.util.logging.Logger;
 public class VentanaPrincipal extends JFrame {
 
     /**
@@ -40,12 +40,16 @@ public class VentanaPrincipal extends JFrame {
 
     private JPanel pnBotones; /**< Un objeto JPanel. El panel en el que se ubicarán los botones de acción sobre el objeto. */
     private JPanel pnBtInferior; /**< Un objeto JPanel. El panel inferior en el que se ubicará el panel de botones. */
-    protected JButton btRecuperar; /**< Un objeto JButton. El botón de recuperar para acceder a la lista de objetos guardados. */
-    protected JButton btGuardar; /**< Un objeto JButton. El botón para guardar en una lista de objetos almacenados. */
+
+    public JButton btRecuperar; /**< Un objeto JButton. El botón de recuperar para acceder a la lista de objetos guardados. */
+    public JButton btGuardar; /**< Un objeto JButton. El botón para guardar en una lista de objetos almacenados. */
+
     private JPanel pnBtSuperior; /**< Un objeto JPanel. El panel superior integrado en el panel de botones. */
-    protected JButton btCrear; /**< Un objeto JButton. El botón para crear un objeto y almacenarlo en otra lista de objetos. */
-    protected JButton btActualizar; /**< Un objeto JButton. El botón para actualizar los datos del objeto seleccionado así como su posición. */
-    protected JButton btEliminar; /**< Un objeto JButton. El botón para eliminar un objeto de la lista actual de objetos. */
+
+    public JButton btCrear; /**< Un objeto JButton. El botón para crear un objeto y almacenarlo en otra lista de objetos. */
+    public JButton btActualizar; /**< Un objeto JButton. El botón para actualizar los datos del objeto seleccionado así como su posición. */
+
+    public JButton btEliminar; /**< Un objeto JButton. El botón para eliminar un objeto de la lista actual de objetos. */
     private JLabel lbInformacionObjetos; /**< Una etiqueta JLabel. Etiqueta de título correspondiente a la información de los objetos. */
     private JPanel pnCampos; /**< Un objeto JPanel. El panel dedicado a rellenar o mostrar los campos para un objeto determinado. */
     private JPanel pnPosiciones; /**< Un objeto JPanel. El panel para ubicar los elementos de mostrar la posición del objeto. */
@@ -72,13 +76,14 @@ public class VentanaPrincipal extends JFrame {
      * Método que instancia la propia clase VentanaPrincipal y visibiliza la interfaz.
      */
     public static void main(String[] args) {
+        Logger logger=Logger.getLogger(VentanaPrincipal.class.getName());
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
                     VentanaPrincipal frame = new VentanaPrincipal();
                     frame.setVisible(true);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.log(Level.SEVERE,"Excepcion");
                 }
             }
         });
@@ -98,7 +103,7 @@ public class VentanaPrincipal extends JFrame {
         modelObjetosGuardados = new DefaultListModel<Objeto_Casa>();
 
         setTitle("Seguimiento de objetos en el hogar");
-        setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource("/img/ObjectTrackingIcon.png")));
+        //setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource("/img/ObjectTrackingIcon.png")));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 700, 400);
         pnPrincipal = new JPanel();
@@ -380,7 +385,7 @@ public class VentanaPrincipal extends JFrame {
                         String campoModelo = getTxModelo().getText();
                         String campoValor = getTxValor().getText();
 
-                        if (!(campoID.isBlank() && campoMarca.isBlank() && campoModelo.isBlank() && campoValor.isBlank())) {
+                        if (!(campoID.isEmpty() && campoMarca.isEmpty() && campoModelo.isEmpty() && campoValor.isEmpty())) {
                             Objeto_Casa objetoACrear = new Objeto_Casa(campoID, campoMarca, campoModelo, campoValor, casa);
                             if (modelObjetos.isEmpty() || !doesItContain(objetoACrear, modelObjetos)) {
                                 modelObjetos.addElement(objetoACrear);

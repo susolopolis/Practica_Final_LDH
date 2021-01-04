@@ -1,74 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Ruta.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Practica_Final_LDH</a> &gt; <a href="index.source.html" class="el_package">Objetos</a> &gt; <span class="el_source">Ruta.java</span></div><h1>Ruta.java</h1><pre class="source lang-java linenums">package Objetos;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
+import java.security.SecureRandom;
 
 public class Ruta {
 
-    public static final int COTA_DE_DESPLAZAMIENTO_X = 100;
-    public static final int COTA_DE_DESPLAZAMIENTO_Y = 45;
+    public static final int COTA_DE_DESPLAZAMIENTO_X = 100; /**&lt; Un entero. La cota de desplazamiento para la posición X */
+    public static final int COTA_DE_DESPLAZAMIENTO_Y = 45; /**&lt; Un entero. La cota de desplazamiento para la posición Y */
 
-    private int pos_actual_x;
-    private int pos_actual_y;
+    private int pos_actual_x; /**&lt; Un entero. El valor que tendrá la posición X. */
+    private int pos_actual_y; /**&lt; Un entero. El valor que tendrá la posición Y. */
+
+<span class="fc" id="L15">    private Random ran1 = SecureRandom.getInstanceStrong(); /**&lt; Valor 1 aleatorio para la generacion de la posicion */</span>
+<span class="fc" id="L16">    private Random ran2 = SecureRandom.getInstanceStrong(); /**&lt; Valor 2 aleatorio para la generacion de la posicion */</span>
 
     private Casa casa;
 
+    /**
+     * Constructor vacío de la clase de la ruta.
+     *
+     * En este constructor vacío se inicializan las posiciones X e Y del objeto a 0.
+     */
 
-<span class="fc" id="L16">    public Ruta(){</span>
-<span class="fc" id="L17">        pos_actual_x = 0;</span>
-<span class="fc" id="L18">        pos_actual_y = 0;</span>
-<span class="fc" id="L19">    }</span>
+<span class="fc" id="L26">    public Ruta() throws NoSuchAlgorithmException {</span>
+<span class="fc" id="L27">        pos_actual_x = 0;</span>
+<span class="fc" id="L28">        pos_actual_y = 0;</span>
+<span class="fc" id="L29">    }</span>
 
-    public Ruta(Casa casa){
-<span class="fc" id="L22">        this();</span>
-<span class="fc" id="L23">        this.casa = casa;</span>
-<span class="fc" id="L24">    }</span>
+    /**
+     * Constructor de la clase de la ruta con el entorno en el que se está simulando.
+     *
+     * En este constructor se asigna el valor del hogar que se pasa como parámetro al atributo 'casa' de la ruta.
+     * @param casa El entorno en el que se desea ejecutar la simulación de movimiento.
+     */
+
+    public Ruta(Casa casa) throws NoSuchAlgorithmException {
+<span class="fc" id="L39">        this();</span>
+<span class="fc" id="L40">        this.casa = casa;</span>
+<span class="fc" id="L41">    }</span>
+
+    /**
+     * Método que simula y calcula las posiciones X e Y del objeto para esta ruta.
+     *
+     * En este método se calculan las posiciones X e Y del objeto en base a un rangoX y rangoY que serán las cotas
+     * sobre las que se deseará ejecutar la simulación, de tal modo que se pueda ajustar y reflejar un desplazamiento
+     * del objeto más realista. Para aportar cierta naturalidad a la operación, se dota de aleatoriedad a ésta y se
+     * distingue entre 4 casos de ejecución: incrementar X y decrementar Y; decrementar X e incrementar Y;
+     * decrementar X e Y; incrementar X e Y.
+     * @param rangoX Un entero. El rango en el que se desea incrementar/decrementar el valor de X.
+     * @param rangoY Un entero. El rango en el que se desea incrementar/decrementar el valor de Y.
+     */
 
     public void calcular_pos_actual(int rangoX, int rangoY){
-<span class="fc" id="L27">        Random ran1 = new Random();</span>
-<span class="fc" id="L28">        Random ran2 = new Random();</span>
 
         int valor_X ;
         int valor_Y ;
 
         double random;
 
-<span class="pc bpc" id="L35" title="1 of 4 branches missed.">        if(pos_actual_x &gt; 0 &amp;&amp; pos_actual_y &gt; 0){</span>
+<span class="pc bpc" id="L62" title="1 of 4 branches missed.">        if(pos_actual_x &gt; 0 &amp;&amp; pos_actual_y &gt; 0){</span>
             do{
-<span class="fc" id="L37">                valor_X = pos_actual_x;</span>
-<span class="fc" id="L38">                valor_Y = pos_actual_y;</span>
+<span class="fc" id="L64">                valor_X = pos_actual_x;</span>
+<span class="fc" id="L65">                valor_Y = pos_actual_y;</span>
 
-<span class="fc" id="L40">                random = Math.random();</span>
+<span class="fc" id="L67">                random = new SecureRandom().nextDouble();</span>
 
-<span class="fc bfc" id="L42" title="All 2 branches covered.">                if(random &lt; 0.25){</span>
-<span class="fc" id="L43">                    valor_X += ran1.nextInt(rangoX);</span>
-<span class="fc" id="L44">                    valor_Y -= ran2.nextInt(rangoY);</span>
-<span class="fc bfc" id="L45" title="All 2 branches covered.">                } else if (random &lt; 0.5){</span>
-<span class="fc" id="L46">                    valor_X -= ran1.nextInt(rangoX);</span>
-<span class="fc" id="L47">                    valor_Y += ran2.nextInt(rangoY);</span>
-<span class="fc bfc" id="L48" title="All 2 branches covered.">                } else if (random &lt; 0.75){</span>
-<span class="fc" id="L49">                    valor_X -= ran1.nextInt(rangoX);</span>
-<span class="fc" id="L50">                    valor_Y -= ran2.nextInt(rangoY);</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">                if(random &lt; 0.25){</span>
+<span class="fc" id="L70">                    valor_X += ran1.nextInt(rangoX);</span>
+<span class="fc" id="L71">                    valor_Y -= ran2.nextInt(rangoY);</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">                } else if (random &lt; 0.5){</span>
+<span class="fc" id="L73">                    valor_X -= ran1.nextInt(rangoX);</span>
+<span class="fc" id="L74">                    valor_Y += ran2.nextInt(rangoY);</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">                } else if (random &lt; 0.75){</span>
+<span class="fc" id="L76">                    valor_X -= ran1.nextInt(rangoX);</span>
+<span class="fc" id="L77">                    valor_Y -= ran2.nextInt(rangoY);</span>
                 } else {
-<span class="fc" id="L52">                    valor_X += ran1.nextInt(rangoX);</span>
-<span class="fc" id="L53">                    valor_Y += ran2.nextInt(rangoY);</span>
+<span class="fc" id="L79">                    valor_X += ran1.nextInt(rangoX);</span>
+<span class="fc" id="L80">                    valor_Y += ran2.nextInt(rangoY);</span>
                 }
-<span class="fc bfc" id="L55" title="All 8 branches covered.">            } while((valor_X &lt;= 0 || valor_X &gt;= casa.getAncho()) || (valor_Y &lt;= 0 || valor_Y &gt;= casa.getLargo()));</span>
+<span class="pc bpc" id="L82" title="2 of 8 branches missed.">            } while((valor_X &lt;= 0 || valor_X &gt;= casa.getAncho()) || (valor_Y &lt;= 0 || valor_Y &gt;= casa.getLargo()));</span>
 
         } else {
-<span class="fc" id="L58">            valor_X = ran1.nextInt(rangoX);</span>
-<span class="fc" id="L59">            valor_Y = ran2.nextInt(rangoY);</span>
+<span class="fc" id="L85">            valor_X = ran1.nextInt(rangoX);</span>
+<span class="fc" id="L86">            valor_Y = ran2.nextInt(rangoY);</span>
         }
 
-<span class="fc" id="L62">        pos_actual_x = valor_X;</span>
-<span class="fc" id="L63">        pos_actual_y = valor_Y;</span>
-<span class="fc" id="L64">    }</span>
-
+<span class="fc" id="L89">        pos_actual_x = valor_X;</span>
+<span class="fc" id="L90">        pos_actual_y = valor_Y;</span>
+<span class="fc" id="L91">    }</span>
+    /**
+     * Getter de la posición X de la ruta.
+     *
+     * Este método devuelve el valor que tiene el atributo 'pos_actual_x' de la ruta.
+     * @return La posición X de la ruta en la que se encuentra el objeto.
+     */
     public int get_pos_x(){
-<span class="fc" id="L67">        return pos_actual_x;</span>
+<span class="fc" id="L99">        return pos_actual_x;</span>
     }
 
+    /**
+     * Getter de la posición Y de la ruta.
+     *
+     * Este método devuelve el valor que tiene el atributo 'pos_actual_y' de la ruta.
+     * @return La posición Y de la ruta en la que se encuentra el objeto.
+     */
     public int get_pos_y(){
-<span class="fc" id="L71">        return pos_actual_y;</span>
+<span class="fc" id="L109">        return pos_actual_y;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

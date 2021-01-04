@@ -18,7 +18,8 @@ import java.awt.Toolkit;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 public class VentanaPrincipal extends JFrame {
 
     /**
@@ -27,615 +28,859 @@ public class VentanaPrincipal extends JFrame {
     private static final long serialVersionUID = 1L;
 
 
-    private JPanel pnPrincipal;
-    private JPanel pnObjetos;
-    private JPanel pnLocalizacion;
-    private JLabel lbListaObjetos;
+    private JPanel pnPrincipal; /**&lt; Un objeto JPanel. El panel principal de la Interfaz Gráfica de Usuario (IGU). */
+    private JPanel pnObjetos; /**&lt; Un objeto JPanel. El panel en el que se ubicará la lista de objetos. */
+    private JPanel pnLocalizacion; /**&lt; Un objeto JPanel. El panel en el que se ubicará la localización de los objetos. */
+    private JLabel lbListaObjetos; /**&lt; Una etiqueta JLabel. Etiqueta de título correspondiente al a lista de objetos. */
 
-    private JScrollPane scrollPaneListaObjetos;
-    protected JList&lt;Objeto_Casa&gt; listObjetos;
-    protected DefaultListModel&lt;Objeto_Casa&gt; modelObjetos;
-    private DefaultListModel&lt;Objeto_Casa&gt; modelObjetosGuardados;
+    private JScrollPane scrollPaneListaObjetos; /**&lt; Un objeto JScrollPane. El panel de scroll que permitirá almacenar toda la lista. */
+    private JList&lt;Objeto_Casa&gt; listObjetos; /**&lt; Una lista JList. Lista que se mostrará en el panel de lista de objetos. */
+    private DefaultListModel&lt;Objeto_Casa&gt; modelObjetos; /**&lt; Un modelo DefaultListModel. El modelo se vinculará con la lista JList de objetos. */
+    private DefaultListModel&lt;Objeto_Casa&gt; modelObjetosGuardados; /**&lt; Un modelo DefaultListModel. El modelo será usado para la lista de objetos guardados. */
 
-    private JPanel pnBotones;
-    private JPanel pnBtInferior;
-    protected JButton btRecuperar;
-    protected JButton btGuardar;
-    private JPanel pnBtSuperior;
-    protected JButton btCrear;
-    protected JButton btActualizar;
-    protected JButton btEliminar;
-    private JLabel lbInformacionObjetos;
-    private JPanel pnCampos;
-    private JPanel pnPosiciones;
-    private JLabel lbId;
-    private JTextField txId;
-    private JLabel lbMarca;
-    private JTextField txMarca;
-    private JLabel lbModelo;
-    private JTextField txModelo;
-    private JLabel lbValor;
-    private JTextField txValor;
-    private JCheckBox chckbxEditar;
-    private JSeparator separator;
-    private JLabel lbPosicionX;
-    private JTextField txPosicionX;
-    private JLabel lbPosicionY;
-    private JTextField txPosicionY;
+    private JPanel pnBotones; /**&lt; Un objeto JPanel. El panel en el que se ubicarán los botones de acción sobre el objeto. */
+    private JPanel pnBtInferior; /**&lt; Un objeto JPanel. El panel inferior en el que se ubicará el panel de botones. */
 
-    Casa casa;
+    public JButton btRecuperar; /**&lt; Un objeto JButton. El botón de recuperar para acceder a la lista de objetos guardados. */
+    public JButton btGuardar; /**&lt; Un objeto JButton. El botón para guardar en una lista de objetos almacenados. */
 
-<span class="fc" id="L68">    Objeto_Casa ultimaSeleccion = null;</span>
+    private JPanel pnBtSuperior; /**&lt; Un objeto JPanel. El panel superior integrado en el panel de botones. */
+
+    public JButton btCrear; /**&lt; Un objeto JButton. El botón para crear un objeto y almacenarlo en otra lista de objetos. */
+    public JButton btActualizar; /**&lt; Un objeto JButton. El botón para actualizar los datos del objeto seleccionado así como su posición. */
+
+    public JButton btEliminar; /**&lt; Un objeto JButton. El botón para eliminar un objeto de la lista actual de objetos. */
+    private JLabel lbInformacionObjetos; /**&lt; Una etiqueta JLabel. Etiqueta de título correspondiente a la información de los objetos. */
+    private JPanel pnCampos; /**&lt; Un objeto JPanel. El panel dedicado a rellenar o mostrar los campos para un objeto determinado. */
+    private JPanel pnPosiciones; /**&lt; Un objeto JPanel. El panel para ubicar los elementos de mostrar la posición del objeto. */
+    private JLabel lbId; /**&lt; Una etiqueta JLabel. Etiqueta de título correspondiente al ID. */
+    private JTextField txId; /**&lt; Un campo de texto JTextField. Campo de texto para el ID del objeto. */
+    private JLabel lbMarca; /**&lt; Una etiqueta JLabel. Etiqueta de título correspondiente a la marca. */
+    private JTextField txMarca; /**&lt; Un campo de texto JTextField. Campo de texto para la marca del objeto. */
+    private JLabel lbModelo; /**&lt; Una etiqueta JLabel. Etiqueta de título correspondiente al modelo. */
+    private JTextField txModelo; /**&lt; Un campo de texto JTextField. Campo de texto para el modelo del objeto. */
+    private JLabel lbValor; /**&lt; Una etiqueta JLabel. Etiqueta de título correspondiente al valor. */
+    private JTextField txValor; /**&lt; Un campo de texto JTextField. Campo de texto para el valor del objeto. */
+    private JCheckBox chckbxEditar; /**&lt; Un objeto JCheckBox. Checkbox para habilitar los campos de texto y permitir que sean editables. */
+    private JSeparator separator; /**&lt; Un objeto JSeparator. Separador para reestructurar correctamente los elementos visuales en el layout. */
+    private JLabel lbPosicionX; /**&lt; Una etiqueta JLabel. Etiqueta de título correspondiente a la posición X. */
+    private JTextField txPosicionX; /**&lt; Un campo de texto JTextField. Campo de texto para la posición X del objeto. */
+    private JLabel lbPosicionY; /**&lt; Una etiqueta JLabel. Etiqueta de título correspondiente a la posición Y. */
+    private JTextField txPosicionY; /**&lt; Un campo de texto JTextField. Campo de texto para la posición Y del objeto. */
+
+    Casa casa; /**&lt; Un objeto Casa. Objeto Casa empleado para instanciar la lógica del proyecto y realizar las operaciones correspondientes. */
+
+<span class="fc" id="L73">    Objeto_Casa ultimaSeleccion = null; /**&lt; Un objeto Objeto_Casa. Objeto que representa el último elemento de la casa seleccionado en la interfaz. */</span>
 
     /**
-     * Launch the application.
+     * Método que instancia la propia clase VentanaPrincipal y visibiliza la interfaz.
      */
     public static void main(String[] args) {
-<span class="nc" id="L74">        EventQueue.invokeLater(new Runnable() {</span>
+<span class="nc" id="L79">        Logger logger=Logger.getLogger(VentanaPrincipal.class.getName());</span>
+<span class="nc" id="L80">        EventQueue.invokeLater(new Runnable() {</span>
             public void run() {
                 try {
-<span class="nc" id="L77">                    VentanaPrincipal frame = new VentanaPrincipal();</span>
-<span class="nc" id="L78">                    frame.setVisible(true);</span>
-<span class="nc" id="L79">                } catch (Exception e) {</span>
-<span class="nc" id="L80">                    e.printStackTrace();</span>
-<span class="nc" id="L81">                }</span>
-<span class="nc" id="L82">            }</span>
+<span class="nc" id="L83">                    VentanaPrincipal frame = new VentanaPrincipal();</span>
+<span class="nc" id="L84">                    frame.setVisible(true);</span>
+<span class="nc" id="L85">                } catch (Exception e) {</span>
+<span class="nc" id="L86">                    logger.log(Level.SEVERE,&quot;Excepcion&quot;);</span>
+<span class="nc" id="L87">                }</span>
+<span class="nc" id="L88">            }</span>
         });
-<span class="nc" id="L84">    }</span>
+<span class="nc" id="L90">    }</span>
 
     /**
-     * Create the frame.
+     * Constructor de la clase de la ventana.
+     *
+     * En este constructor se inicializa el objeto VentanaPrincipal, así como los elementos de la lógica necesarios para
+     * simular la aplicación del localizador electrónico en el hogar. Los objetos involucrados serían el atributo casa
+     * así como modelObjetosGuardados. Posteriormente, se establece el título de la ventana así como otras propiedades básicas
+     * de la ventana. Se añadirán los correspondientes paneles, así como su layout, que contendrán el resto de elementos
+     * de la IGU.
      */
-<span class="fc" id="L89">    public VentanaPrincipal() {</span>
-<span class="fc" id="L90">        casa = new Casa(1000, 500);</span>
-<span class="fc" id="L91">        modelObjetosGuardados = new DefaultListModel&lt;Objeto_Casa&gt;();</span>
+<span class="fc" id="L101">    public VentanaPrincipal() {</span>
+<span class="fc" id="L102">        casa = new Casa(1000, 500);</span>
+<span class="fc" id="L103">        modelObjetosGuardados = new DefaultListModel&lt;Objeto_Casa&gt;();</span>
 
-<span class="fc" id="L93">        setTitle(&quot;Seguimiento de objetos en el hogar&quot;);</span>
-        //setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource(&quot;src/Codigo/img/ObjectTrackingIcon.png&quot;)));
-<span class="fc" id="L95">        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
-<span class="fc" id="L96">        setBounds(100, 100, 700, 400);</span>
-<span class="fc" id="L97">        pnPrincipal = new JPanel();</span>
-<span class="fc" id="L98">        pnPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));</span>
-<span class="fc" id="L99">        pnPrincipal.setLayout(new BorderLayout(0, 0));</span>
-<span class="fc" id="L100">        setContentPane(pnPrincipal);</span>
-<span class="fc" id="L101">        pnPrincipal.add(getPnObjetos(), BorderLayout.WEST);</span>
-<span class="fc" id="L102">        pnPrincipal.add(getPnLocalizacion(), BorderLayout.CENTER);</span>
+<span class="fc" id="L105">        setTitle(&quot;Seguimiento de objetos en el hogar&quot;);</span>
+        //setIconImage(Toolkit.getDefaultToolkit().getImage(VentanaPrincipal.class.getResource(&quot;/img/ObjectTrackingIcon.png&quot;)));
+<span class="fc" id="L107">        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="fc" id="L108">        setBounds(100, 100, 700, 400);</span>
+<span class="fc" id="L109">        pnPrincipal = new JPanel();</span>
+<span class="fc" id="L110">        pnPrincipal.setBorder(new EmptyBorder(5, 5, 5, 5));</span>
+<span class="fc" id="L111">        pnPrincipal.setLayout(new BorderLayout(0, 0));</span>
+<span class="fc" id="L112">        setContentPane(pnPrincipal);</span>
+<span class="fc" id="L113">        pnPrincipal.add(getPnObjetos(), BorderLayout.WEST);</span>
+<span class="fc" id="L114">        pnPrincipal.add(getPnLocalizacion(), BorderLayout.CENTER);</span>
 
-<span class="fc" id="L104">        setLocationRelativeTo(null);</span>
-<span class="fc" id="L105">    }</span>
+<span class="fc" id="L116">        setLocationRelativeTo(null);</span>
+<span class="fc" id="L117">    }</span>
 
-    public JPanel getPnObjetos() {
-<span class="pc bpc" id="L108" title="1 of 2 branches missed.">        if (pnObjetos == null) {</span>
-<span class="fc" id="L109">            pnObjetos = new JPanel();</span>
-<span class="fc" id="L110">            GridBagLayout gbl_pnObjetos = new GridBagLayout();</span>
-<span class="fc" id="L111">            gbl_pnObjetos.columnWidths = new int[]{214, 0};</span>
-<span class="fc" id="L112">            gbl_pnObjetos.rowHeights = new int[]{36, 244, 70, 0, 0, 0};</span>
-<span class="fc" id="L113">            gbl_pnObjetos.columnWeights = new double[]{1.0, Double.MIN_VALUE};</span>
-<span class="fc" id="L114">            gbl_pnObjetos.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};</span>
-<span class="fc" id="L115">            pnObjetos.setLayout(gbl_pnObjetos);</span>
-<span class="fc" id="L116">            GridBagConstraints gbc_lbListaObjetos = new GridBagConstraints();</span>
-<span class="fc" id="L117">            gbc_lbListaObjetos.fill = GridBagConstraints.BOTH;</span>
-<span class="fc" id="L118">            gbc_lbListaObjetos.insets = new Insets(0, 0, 5, 0);</span>
-<span class="fc" id="L119">            gbc_lbListaObjetos.gridx = 0;</span>
-<span class="fc" id="L120">            gbc_lbListaObjetos.gridy = 0;</span>
-<span class="fc" id="L121">            pnObjetos.add(getLbListaObjetos(), gbc_lbListaObjetos);</span>
-<span class="fc" id="L122">            GridBagConstraints gbc_scrollPaneListaObjetos = new GridBagConstraints();</span>
-<span class="fc" id="L123">            gbc_scrollPaneListaObjetos.fill = GridBagConstraints.BOTH;</span>
-<span class="fc" id="L124">            gbc_scrollPaneListaObjetos.insets = new Insets(0, 0, 5, 0);</span>
-<span class="fc" id="L125">            gbc_scrollPaneListaObjetos.gridx = 0;</span>
-<span class="fc" id="L126">            gbc_scrollPaneListaObjetos.gridy = 1;</span>
-<span class="fc" id="L127">            pnObjetos.add(getScrollPaneListaObjetos(), gbc_scrollPaneListaObjetos);</span>
-<span class="fc" id="L128">            GridBagConstraints gbc_pnBotones = new GridBagConstraints();</span>
-<span class="fc" id="L129">            gbc_pnBotones.insets = new Insets(0, 0, 5, 0);</span>
-<span class="fc" id="L130">            gbc_pnBotones.fill = GridBagConstraints.BOTH;</span>
-<span class="fc" id="L131">            gbc_pnBotones.gridx = 0;</span>
-<span class="fc" id="L132">            gbc_pnBotones.gridy = 2;</span>
-<span class="fc" id="L133">            pnObjetos.add(getPnBotones(), gbc_pnBotones);</span>
+    /**
+     * Getter del panel de objetos.
+     *
+     * Este método devuelve el valor que tiene el objeto del panel de objetos para el atributo 'pnObjetos'
+     * @return El panel de objetos.
+     */
+    private JPanel getPnObjetos() {
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        if (pnObjetos == null) {</span>
+<span class="fc" id="L127">            pnObjetos = new JPanel();</span>
+<span class="fc" id="L128">            GridBagLayout gbl_pnObjetos = new GridBagLayout();</span>
+<span class="fc" id="L129">            gbl_pnObjetos.columnWidths = new int[]{214, 0};</span>
+<span class="fc" id="L130">            gbl_pnObjetos.rowHeights = new int[]{36, 244, 70, 0, 0, 0};</span>
+<span class="fc" id="L131">            gbl_pnObjetos.columnWeights = new double[]{1.0, Double.MIN_VALUE};</span>
+<span class="fc" id="L132">            gbl_pnObjetos.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};</span>
+<span class="fc" id="L133">            pnObjetos.setLayout(gbl_pnObjetos);</span>
+<span class="fc" id="L134">            GridBagConstraints gbc_lbListaObjetos = new GridBagConstraints();</span>
+<span class="fc" id="L135">            gbc_lbListaObjetos.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L136">            gbc_lbListaObjetos.insets = new Insets(0, 0, 5, 0);</span>
+<span class="fc" id="L137">            gbc_lbListaObjetos.gridx = 0;</span>
+<span class="fc" id="L138">            gbc_lbListaObjetos.gridy = 0;</span>
+<span class="fc" id="L139">            pnObjetos.add(getLbListaObjetos(), gbc_lbListaObjetos);</span>
+<span class="fc" id="L140">            GridBagConstraints gbc_scrollPaneListaObjetos = new GridBagConstraints();</span>
+<span class="fc" id="L141">            gbc_scrollPaneListaObjetos.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L142">            gbc_scrollPaneListaObjetos.insets = new Insets(0, 0, 5, 0);</span>
+<span class="fc" id="L143">            gbc_scrollPaneListaObjetos.gridx = 0;</span>
+<span class="fc" id="L144">            gbc_scrollPaneListaObjetos.gridy = 1;</span>
+<span class="fc" id="L145">            pnObjetos.add(getScrollPaneListaObjetos(), gbc_scrollPaneListaObjetos);</span>
+<span class="fc" id="L146">            GridBagConstraints gbc_pnBotones = new GridBagConstraints();</span>
+<span class="fc" id="L147">            gbc_pnBotones.insets = new Insets(0, 0, 5, 0);</span>
+<span class="fc" id="L148">            gbc_pnBotones.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L149">            gbc_pnBotones.gridx = 0;</span>
+<span class="fc" id="L150">            gbc_pnBotones.gridy = 2;</span>
+<span class="fc" id="L151">            pnObjetos.add(getPnBotones(), gbc_pnBotones);</span>
         }
-<span class="fc" id="L135">        return pnObjetos;</span>
+<span class="fc" id="L153">        return pnObjetos;</span>
     }
 
-    public JPanel getPnLocalizacion() {
-<span class="pc bpc" id="L139" title="1 of 2 branches missed.">        if (pnLocalizacion == null) {</span>
-<span class="fc" id="L140">            pnLocalizacion = new JPanel();</span>
-<span class="fc" id="L141">            pnLocalizacion.setLayout(new BorderLayout(0, 0));</span>
-<span class="fc" id="L142">            pnLocalizacion.add(getLbInformacionObjetos(), BorderLayout.NORTH);</span>
-<span class="fc" id="L143">            pnLocalizacion.add(getPnCampos(), BorderLayout.CENTER);</span>
-<span class="fc" id="L144">            pnLocalizacion.add(getPnPosiciones(), BorderLayout.SOUTH);</span>
+    /**
+     * Getter del panel de localización.
+     *
+     * Este método devuelve el valor que tiene el objeto del panel de localización para el atributo 'pnLocalizacion'
+     * @return El panel de localización.
+     */
+    private JPanel getPnLocalizacion() {
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">        if (pnLocalizacion == null) {</span>
+<span class="fc" id="L164">            pnLocalizacion = new JPanel();</span>
+<span class="fc" id="L165">            pnLocalizacion.setLayout(new BorderLayout(0, 0));</span>
+<span class="fc" id="L166">            pnLocalizacion.add(getLbInformacionObjetos(), BorderLayout.NORTH);</span>
+<span class="fc" id="L167">            pnLocalizacion.add(getPnCampos(), BorderLayout.CENTER);</span>
+<span class="fc" id="L168">            pnLocalizacion.add(getPnPosiciones(), BorderLayout.SOUTH);</span>
         }
-<span class="fc" id="L146">        return pnLocalizacion;</span>
+<span class="fc" id="L170">        return pnLocalizacion;</span>
     }
 
-    public JLabel getLbListaObjetos() {
-<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        if (lbListaObjetos == null) {</span>
-<span class="fc" id="L151">            lbListaObjetos = new JLabel(&quot;Lista de objetos:&quot;);</span>
-<span class="fc" id="L152">            lbListaObjetos.setVerticalAlignment(SwingConstants.TOP);</span>
-<span class="fc" id="L153">            lbListaObjetos.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 16));</span>
+    /**
+     * Getter de la etiqueta de la lista de objetos.
+     *
+     * Este método devuelve el valor que tiene el objeto de la etiqueta de la lista de objetos para el atributo 'lbListaObjetos'
+     * @return La etiqueta de lista de objetos.
+     */
+    private JLabel getLbListaObjetos() {
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">        if (lbListaObjetos == null) {</span>
+<span class="fc" id="L181">            lbListaObjetos = new JLabel(&quot;Lista de objetos:&quot;);</span>
+<span class="fc" id="L182">            lbListaObjetos.setVerticalAlignment(SwingConstants.TOP);</span>
+<span class="fc" id="L183">            lbListaObjetos.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 16));</span>
         }
-<span class="fc" id="L155">        return lbListaObjetos;</span>
+<span class="fc" id="L185">        return lbListaObjetos;</span>
     }
 
-    public JScrollPane getScrollPaneListaObjetos() {
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">        if (scrollPaneListaObjetos == null) {</span>
-<span class="fc" id="L160">            scrollPaneListaObjetos = new JScrollPane();</span>
-<span class="fc" id="L161">            scrollPaneListaObjetos.setViewportBorder(new EmptyBorder(1, 1, 1, 1));</span>
-<span class="fc" id="L162">            scrollPaneListaObjetos.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);</span>
-<span class="fc" id="L163">            scrollPaneListaObjetos.setViewportView(getListObjetos());</span>
+    /**
+     * Getter del panel de scroll para la lista de objetos.
+     *
+     * Este método devuelve el valor que tiene el objeto del panel de scroll de lista de objetos para el atributo 'scrollPaneListaObjetos'
+     * @return El panel de scroll de lista de objetos.
+     */
+    private JScrollPane getScrollPaneListaObjetos() {
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">        if (scrollPaneListaObjetos == null) {</span>
+<span class="fc" id="L196">            scrollPaneListaObjetos = new JScrollPane();</span>
+<span class="fc" id="L197">            scrollPaneListaObjetos.setViewportBorder(new EmptyBorder(1, 1, 1, 1));</span>
+<span class="fc" id="L198">            scrollPaneListaObjetos.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);</span>
+<span class="fc" id="L199">            scrollPaneListaObjetos.setViewportView(getListObjetos());</span>
         }
-<span class="fc" id="L165">        return scrollPaneListaObjetos;</span>
+<span class="fc" id="L201">        return scrollPaneListaObjetos;</span>
     }
 
-    public JList&lt;Objeto_Casa&gt; getListObjetos() {
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">        if (listObjetos == null) {</span>
-<span class="fc" id="L170">            modelObjetos = new DefaultListModel&lt;Objeto_Casa&gt;();</span>
-<span class="fc" id="L171">            listObjetos = new JList&lt;Objeto_Casa&gt;();</span>
-<span class="fc" id="L172">            listObjetos.addListSelectionListener(new ListSelectionListener() {</span>
+    /**
+     * Getter de la lista de objetos.
+     *
+     * Este método devuelve el valor que tiene el objeto de la lista de objetos para el atributo 'listObjetos'.
+     * Cabe destacar que la lista se actualizará siempre y cuando el valor seleccionado se actualice, y esto
+     * afecta al uso del objeto 'modelObjetos', que se modificará a través del método actualizarValores().
+     *
+     * @return La lista de objetos de la casa.
+     */
+    private JList&lt;Objeto_Casa&gt; getListObjetos() {
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">        if (listObjetos == null) {</span>
+<span class="fc" id="L215">            modelObjetos = new DefaultListModel&lt;Objeto_Casa&gt;();</span>
+<span class="fc" id="L216">            listObjetos = new JList&lt;Objeto_Casa&gt;();</span>
+<span class="fc" id="L217">            listObjetos.addListSelectionListener(new ListSelectionListener() {</span>
                 public void valueChanged(ListSelectionEvent arg0) {
-<span class="nc bnc" id="L174" title="All 2 branches missed.">                    if (!listObjetos.isSelectionEmpty())</span>
-<span class="nc" id="L175">                        actualizarValores(modelObjetos.get(listObjetos.getSelectedIndex()));</span>
-<span class="nc" id="L176">                }</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">                    if (!listObjetos.isSelectionEmpty())</span>
+<span class="nc" id="L220">                        actualizarValores(modelObjetos.get(listObjetos.getSelectedIndex()));</span>
+<span class="nc" id="L221">                }</span>
             });
-<span class="fc" id="L178">            listObjetos.setModel(modelObjetos);</span>
-<span class="fc" id="L179">            listObjetos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
+<span class="fc" id="L223">            listObjetos.setModel(modelObjetos);</span>
+<span class="fc" id="L224">            listObjetos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);</span>
         }
-<span class="fc" id="L181">        return listObjetos;</span>
+<span class="fc" id="L226">        return listObjetos;</span>
     }
 
-
-    public JPanel getPnBotones() {
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">        if (pnBotones == null) {</span>
-<span class="fc" id="L187">            pnBotones = new JPanel();</span>
-<span class="fc" id="L188">            pnBotones.setLayout(new GridLayout(2, 3, 0, 0));</span>
-<span class="fc" id="L189">            pnBotones.add(getPnBtSuperior());</span>
-<span class="fc" id="L190">            pnBotones.add(getPnBtInferior());</span>
+    /**
+     * Getter del panel botones.
+     *
+     * Este método devuelve el valor que tiene el objeto del panel de botones para el atributo 'pnBotones'.
+     * @return El panel de botones.
+     */
+    private JPanel getPnBotones() {
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">        if (pnBotones == null) {</span>
+<span class="fc" id="L237">            pnBotones = new JPanel();</span>
+<span class="fc" id="L238">            pnBotones.setLayout(new GridLayout(2, 3, 0, 0));</span>
+<span class="fc" id="L239">            pnBotones.add(getPnBtSuperior());</span>
+<span class="fc" id="L240">            pnBotones.add(getPnBtInferior());</span>
         }
-<span class="fc" id="L192">        return pnBotones;</span>
+<span class="fc" id="L242">        return pnBotones;</span>
     }
 
-    public JPanel getPnBtInferior() {
-<span class="pc bpc" id="L196" title="1 of 2 branches missed.">        if (pnBtInferior == null) {</span>
-<span class="fc" id="L197">            pnBtInferior = new JPanel();</span>
-<span class="fc" id="L198">            pnBtInferior.add(getBtRecuperar());</span>
-<span class="fc" id="L199">            pnBtInferior.add(getBtGuardar());</span>
+    /**
+     * Getter del panel inferior de botones.
+     *
+     * Este método devuelve el valor que tiene el objeto del panel inferior de botones para el atributo 'pnBtInferior'.
+     * @return El panel inferior de botones.
+     */
+    private JPanel getPnBtInferior() {
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">        if (pnBtInferior == null) {</span>
+<span class="fc" id="L253">            pnBtInferior = new JPanel();</span>
+<span class="fc" id="L254">            pnBtInferior.add(getBtRecuperar());</span>
+<span class="fc" id="L255">            pnBtInferior.add(getBtGuardar());</span>
         }
-<span class="fc" id="L201">        return pnBtInferior;</span>
+<span class="fc" id="L257">        return pnBtInferior;</span>
     }
 
-    public JButton getBtRecuperar() {
-<span class="pc bpc" id="L205" title="1 of 2 branches missed.">        if (btRecuperar == null) {</span>
-<span class="fc" id="L206">            btRecuperar = new JButton(&quot;Recuperar&quot;);</span>
-<span class="fc" id="L207">            btRecuperar.addActionListener(new ActionListener() {</span>
+    /**
+     * Getter del botón de recuperar.
+     *
+     * Este método devuelve el valor que tiene el objeto del botón recuperar para el atributo 'btRecuperar'.
+     * Como actionPerformed el botón accederá a una lista adicional de objetos previamente guardados para poder recuperarlos
+     * e incorporarlos nuevamente a la lista actual de objetos sobre los que se está haciendo seguimiento (en caso de que
+     * no esté ya en dicha lista).
+     * @return El botón de recuperar.
+     */
+    private JButton getBtRecuperar() {
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">        if (btRecuperar == null) {</span>
+<span class="fc" id="L271">            btRecuperar = new JButton(&quot;Recuperar&quot;);</span>
+<span class="fc" id="L272">            btRecuperar.addActionListener(new ActionListener() {</span>
                 public void actionPerformed(ActionEvent arg0) {
-<span class="fc" id="L209">                    Object[] opciones = modelObjetosGuardados.toArray();</span>
+<span class="fc" id="L274">                    Object[] opciones = modelObjetosGuardados.toArray();</span>
 
-<span class="fc" id="L211">                    Object objetoSeleccionado = JOptionPane.showInputDialog(getReferenciaThis(),</span>
-                            &quot;Escoje un objeto a recuperar&quot;,
+<span class="fc" id="L276">                    Object objetoSeleccionado = JOptionPane.showInputDialog(getReferenciaThis(),</span>
+                            &quot;Escoge un objeto a recuperar&quot;,
                             &quot;Recuperar objeto&quot;,
                             JOptionPane.QUESTION_MESSAGE,
                             null,
                             opciones,
                             ultimaSeleccion);
 
-<span class="pc bpc" id="L219" title="1 of 2 branches missed.">                    if (objetoSeleccionado == null) {</span>
+<span class="pc bpc" id="L284" title="1 of 2 branches missed.">                    if (objetoSeleccionado == null) {</span>
                         // Si el usuario cancela; no ha seleccionado nada; o pulsó Escape or hit escape
-<span class="fc" id="L221">                        JOptionPane.showMessageDialog(null, &quot;\r\nOperación cancelada&quot;);</span>
+<span class="fc" id="L286">                        JOptionPane.showMessageDialog(null, &quot;\r\nOperación cancelada&quot;);</span>
                     } else {
                         // Se recupera el objeto
-<span class="nc" id="L224">                        ultimaSeleccion = (Objeto_Casa) objetoSeleccionado;</span>
-<span class="nc" id="L225">                        recuperarObjeto(ultimaSeleccion);</span>
+<span class="nc" id="L289">                        ultimaSeleccion = (Objeto_Casa) objetoSeleccionado;</span>
+<span class="nc" id="L290">                        recuperarObjeto(ultimaSeleccion);</span>
                     }
-<span class="fc" id="L227">                }</span>
+<span class="fc" id="L292">                }</span>
             });
         }
-<span class="fc" id="L230">        return btRecuperar;</span>
+<span class="fc" id="L295">        return btRecuperar;</span>
     }
 
+    /**
+     * Método que permite recuperar un objeto de la lista de objetos.
+     *
+     * En este método se incorpora el elemento que se pasa como parámetro a la lista actual de objetos de tracking.
+     * Primeramente se comprueba si el objeto ya estaba presente en la lista o no.
+     * @param objetoARecuperar El objeto que se desea recuperar.
+     */
     public void recuperarObjeto(Objeto_Casa objetoARecuperar) {
-<span class="fc bfc" id="L234" title="All 2 branches covered.">        if (!doesItContain(objetoARecuperar, modelObjetos)) {</span>
-<span class="fc" id="L235">            modelObjetos.addElement(objetoARecuperar);</span>
-<span class="fc" id="L236">            casa.agregar_objeto(objetoARecuperar);</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">        if (!doesItContain(objetoARecuperar, modelObjetos)) {</span>
+<span class="fc" id="L307">            modelObjetos.addElement(objetoARecuperar);</span>
+<span class="fc" id="L308">            casa.agregar_objeto(objetoARecuperar);</span>
         } else {
-<span class="fc" id="L238">            JOptionPane.showMessageDialog(null, &quot;El objeto que desea recuperar ya existe&quot; +</span>
+<span class="fc" id="L310">            JOptionPane.showMessageDialog(null, &quot;El objeto que desea recuperar ya existe&quot; +</span>
                     &quot; en la lista actual&quot;);
         }
-<span class="fc" id="L241">    }</span>
+<span class="fc" id="L313">    }</span>
 
-    public JButton getBtGuardar() {
-<span class="fc bfc" id="L244" title="All 2 branches covered.">        if (btGuardar == null) {</span>
-<span class="fc" id="L245">            btGuardar = new JButton(&quot;Guardar&quot;);</span>
-<span class="fc" id="L246">            btGuardar.addActionListener(new ActionListener() {</span>
+    /**
+     * Getter del botón de guardar.
+     *
+     * Este método devuelve el valor que tiene el objeto del botón guardar para el atributo 'btGuardar'.
+     * Como actionPerformed del botón se tomará el objeto a almacenar y se comprobará que la lista de objetos guardados
+     * no contenga dicho elemento. Una vez evaluado el guardado se muestra un mensaje informativo sobre la operación realizada.
+     * @return El botón de guardar.
+     */
+    private JButton getBtGuardar() {
+<span class="pc bpc" id="L324" title="1 of 2 branches missed.">        if (btGuardar == null) {</span>
+<span class="fc" id="L325">            btGuardar = new JButton(&quot;Guardar&quot;);</span>
+<span class="fc" id="L326">            btGuardar.addActionListener(new ActionListener() {</span>
                 public void actionPerformed(ActionEvent arg0) {
-<span class="pc bpc" id="L248" title="1 of 2 branches missed.">                    if (!listObjetos.isSelectionEmpty()) {</span>
-<span class="nc" id="L249">                        Objeto_Casa objetoAGuardar = listObjetos.getSelectedValue();</span>
-<span class="nc bnc" id="L250" title="All 2 branches missed.">                        if (modelObjetosGuardados.isEmpty()) {</span>
-<span class="nc" id="L251">                            modelObjetosGuardados.addElement(objetoAGuardar);</span>
-<span class="nc" id="L252">                            JOptionPane.showMessageDialog(null, &quot;Se ha guardado el objeto correctamente.&quot;);</span>
+<span class="pc bpc" id="L328" title="1 of 2 branches missed.">                    if (!listObjetos.isSelectionEmpty()) {</span>
+<span class="nc" id="L329">                        Objeto_Casa objetoAGuardar = listObjetos.getSelectedValue();</span>
+<span class="nc bnc" id="L330" title="All 2 branches missed.">                        if (modelObjetosGuardados.isEmpty()) {</span>
+<span class="nc" id="L331">                            modelObjetosGuardados.addElement(objetoAGuardar);</span>
+<span class="nc" id="L332">                            JOptionPane.showMessageDialog(null, &quot;Se ha guardado el objeto correctamente.&quot;);</span>
                         } else {
-<span class="nc bnc" id="L254" title="All 2 branches missed.">                            if (!doesItContain(objetoAGuardar, modelObjetosGuardados)) {</span>
-<span class="nc" id="L255">                                modelObjetosGuardados.addElement(objetoAGuardar);</span>
-<span class="nc" id="L256">                                JOptionPane.showMessageDialog(null, &quot;Se ha guardado el objeto correctamente.&quot;);</span>
+<span class="nc bnc" id="L334" title="All 2 branches missed.">                            if (!doesItContain(objetoAGuardar, modelObjetosGuardados)) {</span>
+<span class="nc" id="L335">                                modelObjetosGuardados.addElement(objetoAGuardar);</span>
+<span class="nc" id="L336">                                JOptionPane.showMessageDialog(null, &quot;Se ha guardado el objeto correctamente.&quot;);</span>
                             } else {
-<span class="nc" id="L258">                                JOptionPane.showMessageDialog(null, &quot;El objeto &quot;</span>
-<span class="nc" id="L259">                                        + objetoAGuardar.getModelo() + &quot; con ID &quot; + objetoAGuardar.getID() +</span>
+<span class="nc" id="L338">                                JOptionPane.showMessageDialog(null, &quot;El objeto &quot;</span>
+<span class="nc" id="L339">                                        + objetoAGuardar.getModelo() + &quot; con ID &quot; + objetoAGuardar.getID() +</span>
                                         &quot; ya estaba guardado.&quot;, &quot;Objeto previamente almacenado&quot;, JOptionPane.WARNING_MESSAGE);
                             }
                         }
 
                     }
 
-<span class="fc" id="L266">                }</span>
+<span class="fc" id="L346">                }</span>
             });
         }
-<span class="fc" id="L269">        return btGuardar;</span>
+<span class="fc" id="L349">        return btGuardar;</span>
     }
 
-    public JPanel getPnBtSuperior() {
-<span class="pc bpc" id="L273" title="1 of 2 branches missed.">        if (pnBtSuperior == null) {</span>
-<span class="fc" id="L274">            pnBtSuperior = new JPanel();</span>
-<span class="fc" id="L275">            pnBtSuperior.add(getBtCrear());</span>
-<span class="fc" id="L276">            pnBtSuperior.add(getBtActualizar());</span>
-<span class="fc" id="L277">            pnBtSuperior.add(getBtEliminar());</span>
+    /**
+     * Getter del panel superior de botones.
+     *
+     * Este método devuelve el valor que tiene el objeto del panel superior de botones para el atributo 'pnBtSuperior'.
+     * @return El panel superior de botones
+     */
+    private JPanel getPnBtSuperior() {
+<span class="pc bpc" id="L359" title="1 of 2 branches missed.">        if (pnBtSuperior == null) {</span>
+<span class="fc" id="L360">            pnBtSuperior = new JPanel();</span>
+<span class="fc" id="L361">            pnBtSuperior.add(getBtCrear());</span>
+<span class="fc" id="L362">            pnBtSuperior.add(getBtActualizar());</span>
+<span class="fc" id="L363">            pnBtSuperior.add(getBtEliminar());</span>
         }
-<span class="fc" id="L279">        return pnBtSuperior;</span>
+<span class="fc" id="L365">        return pnBtSuperior;</span>
     }
 
-    public JButton getBtCrear() {
-<span class="pc bpc" id="L283" title="1 of 2 branches missed.">        if (btCrear == null) {</span>
-<span class="fc" id="L284">            btCrear = new JButton(&quot;Crear&quot;);</span>
-<span class="fc" id="L285">            btCrear.addActionListener(new ActionListener() {</span>
+    /**
+     * Getter del botón de crear.
+     *
+     * Este método devuelve el valor que tiene el objeto del botón crear para el atributo 'btCrear'.
+     * Como actionPerformed del botón se tomará el objeto que se desea crear y se comprobará que no exista en la lista
+     * de objetos de tracking (es decir, que no se repita el campo ID).
+     * @return El botón de crear.
+     */
+    private JButton getBtCrear() {
+<span class="pc bpc" id="L377" title="1 of 2 branches missed.">        if (btCrear == null) {</span>
+<span class="fc" id="L378">            btCrear = new JButton(&quot;Crear&quot;);</span>
+<span class="fc" id="L379">            btCrear.addActionListener(new ActionListener() {</span>
                 public void actionPerformed(ActionEvent arg0) {
-<span class="pc bpc" id="L287" title="1 of 2 branches missed.">                    if (getChckbxEditar().isSelected()) {</span>
+<span class="pc bpc" id="L381" title="1 of 2 branches missed.">                    if (getChckbxEditar().isSelected()) {</span>
 
-<span class="fc" id="L289">                        String campoID = getTxId().getText();</span>
-<span class="fc" id="L290">                        String campoMarca = getTxMarca().getText();</span>
-<span class="fc" id="L291">                        String campoModelo = getTxModelo().getText();</span>
-<span class="fc" id="L292">                        String campoValor = getTxValor().getText();</span>
+<span class="fc" id="L383">                        String campoID = getTxId().getText();</span>
+<span class="fc" id="L384">                        String campoMarca = getTxMarca().getText();</span>
+<span class="fc" id="L385">                        String campoModelo = getTxModelo().getText();</span>
+<span class="fc" id="L386">                        String campoValor = getTxValor().getText();</span>
 
-<span class="pc bpc" id="L294" title="4 of 8 branches missed.">                        if (!(campoID.isEmpty() &amp;&amp; campoMarca.isEmpty() &amp;&amp; campoModelo.isEmpty() &amp;&amp; campoValor.isEmpty())) {</span>
-<span class="nc" id="L295">                            Objeto_Casa objetoACrear = new Objeto_Casa(campoID, campoMarca, campoModelo, campoValor, casa);</span>
-<span class="nc bnc" id="L296" title="All 4 branches missed.">                            if (modelObjetos.isEmpty() || !doesItContain(objetoACrear, modelObjetos)) {</span>
-<span class="nc" id="L297">                                modelObjetos.addElement(objetoACrear);</span>
-<span class="nc" id="L298">                                casa.agregar_objeto(objetoACrear);</span>
+<span class="pc bpc" id="L388" title="4 of 8 branches missed.">                        if (!(campoID.isEmpty() &amp;&amp; campoMarca.isEmpty() &amp;&amp; campoModelo.isEmpty() &amp;&amp; campoValor.isEmpty())) {</span>
+<span class="nc" id="L389">                            Objeto_Casa objetoACrear = new Objeto_Casa(campoID, campoMarca, campoModelo, campoValor, casa);</span>
+<span class="nc bnc" id="L390" title="All 4 branches missed.">                            if (modelObjetos.isEmpty() || !doesItContain(objetoACrear, modelObjetos)) {</span>
+<span class="nc" id="L391">                                modelObjetos.addElement(objetoACrear);</span>
+<span class="nc" id="L392">                                casa.agregar_objeto(objetoACrear);</span>
                             } else {
-<span class="nc" id="L300">                                JOptionPane.showMessageDialog(null,</span>
+<span class="nc" id="L394">                                JOptionPane.showMessageDialog(null,</span>
                                         &quot;Ya existe un objeto con el mismo ID en la lista. Por favor, introduce otro ID&quot;);
                             }
                         }
                     }
-<span class="fc" id="L305">                }</span>
+<span class="fc" id="L399">                }</span>
             });
         }
-<span class="fc" id="L308">        return btCrear;</span>
+<span class="fc" id="L402">        return btCrear;</span>
     }
 
+    /**
+     * Método que permite comprobar un elemento en el modelo de la lista de objetos que se pase como parámetro.
+     *
+     * En este método se comprueba dado un objeto para comprobarse, y dado un modelo de lista en el que realizar
+     * dicha búsqueda, aquel objeto que coincida en el atributo ID de tal forma que se informe del conflicto en
+     * caso de ya existir, o 'false' si no existen dos objetos con el mismo ID.
+     * @param objetoAComprobar El objeto que se desea buscar.
+     * @param modeloDeBusqueda El modelo de la lista en el que se desea buscar.
+     * @return Un booleano informando de la presencia del elemento a buscar en la lista deseada.
+     */
     public boolean doesItContain(Objeto_Casa objetoAComprobar, DefaultListModel&lt;Objeto_Casa&gt; modeloDeBusqueda) {
-<span class="pc bfc" id="L312" title="All 2 branches covered.">        for (int i = 0; i &lt; modeloDeBusqueda.size(); i++) {</span>
-<span class="pc bpc" id="L313" title="1 of 2 branches missed.">            if (modeloDeBusqueda.get(i).getID().equals(objetoAComprobar.getID())) {</span>
-<span class="fc" id="L314">                return true;</span>
+<span class="pc bfc" id="L416" title="All 2 branches covered.">        for (int i = 0; i &lt; modeloDeBusqueda.size(); i++) {</span>
+<span class="pc bpc" id="L417" title="1 of 2 branches missed.">            if (modeloDeBusqueda.get(i).getID().equals(objetoAComprobar.getID())) {</span>
+<span class="fc" id="L418">                return true;</span>
             }
         }
-<span class="fc" id="L317">        return false;</span>
+<span class="fc" id="L421">        return false;</span>
     }
 
-    public JButton getBtActualizar() {
-<span class="pc bpc" id="L321" title="1 of 2 branches missed.">        if (btActualizar == null) {</span>
-<span class="fc" id="L322">            btActualizar = new JButton(&quot;Actualizar&quot;);</span>
-<span class="fc" id="L323">            btActualizar.addActionListener(new ActionListener() {</span>
+    /**
+     * Getter del botón de actualizar.
+     *
+     * Este método devuelve el valor que tiene el objeto del botón actualizar para el atributo 'btActualizar'.
+     * Como actionPerformed se comprueba que haya un elemento seleccionado en la lista para poder ser actualizado y,
+     * posteriormente, se dispone a refrescar los valores que se deban actualizar en la IGU, de tal forma que pueda
+     * comprobarse el desplazamiento simulado del objeto en los límites establecidos dentro del hogar, y se pueda
+     * consultar también toda la información restante relativa al objeto en cuestión.
+     * @return El botón de actualizar.
+     */
+    private JButton getBtActualizar() {
+<span class="pc bpc" id="L435" title="1 of 2 branches missed.">        if (btActualizar == null) {</span>
+<span class="fc" id="L436">            btActualizar = new JButton(&quot;Actualizar&quot;);</span>
+<span class="fc" id="L437">            btActualizar.addActionListener(new ActionListener() {</span>
                 public void actionPerformed(ActionEvent arg0) {
-<span class="pc bpc" id="L325" title="1 of 2 branches missed.">                    if (!listObjetos.isSelectionEmpty()) {</span>
-<span class="nc" id="L326">                        Objeto_Casa objetoActualizable = modelObjetos.get(listObjetos.getSelectedIndex());</span>
-<span class="nc" id="L327">                        actualizarValores(objetoActualizable);</span>
-<span class="nc" id="L328">                    } else {</span>
-<span class="fc" id="L329">                        JOptionPane.showMessageDialog(null, &quot;Por favor, selecciona &quot; +</span>
+<span class="pc bpc" id="L439" title="1 of 2 branches missed.">                    if (!listObjetos.isSelectionEmpty()) {</span>
+<span class="nc" id="L440">                        Objeto_Casa objetoActualizable = modelObjetos.get(listObjetos.getSelectedIndex());</span>
+<span class="nc" id="L441">                        actualizarValores(objetoActualizable);</span>
+<span class="nc" id="L442">                    } else {</span>
+<span class="fc" id="L443">                        JOptionPane.showMessageDialog(null, &quot;Por favor, selecciona &quot; +</span>
                                 &quot;un elemento de la lista para actualizar la información.&quot;);
                     }
 
-<span class="fc" id="L333">                }</span>
+<span class="fc" id="L447">                }</span>
             });
         }
-<span class="fc" id="L336">        return btActualizar;</span>
+<span class="fc" id="L450">        return btActualizar;</span>
     }
 
+    /**
+     * Método que permite refrescar la información mostrada para el objeto deseado.
+     *
+     * En este método se utiliza el objeto que sea pasado como parámetro para mostrar en los campos correspondientes
+     * el conjunto de atributos que conforman la clase de origen, de tal modo que el usuario disponga de toda la
+     * información relativa al objeto, y además, se calcule la nueva posición del objeto.
+     * @param objetoActualizable El objeto sobre el que se desea mostrar y actualizar sus valores.
+     */
     public void actualizarValores(Objeto_Casa objetoActualizable) {
-<span class="fc" id="L340">        String idActualizado = objetoActualizable.getInfo()[0];</span>
-<span class="fc" id="L341">        String marcaActualizada = objetoActualizable.getInfo()[1];</span>
-<span class="fc" id="L342">        String modeloActualizado = objetoActualizable.getInfo()[2];</span>
-<span class="fc" id="L343">        String valorActualizado = objetoActualizable.getInfo()[3];</span>
+<span class="fc" id="L462">        String idActualizado = objetoActualizable.getInfo()[0];</span>
+<span class="fc" id="L463">        String marcaActualizada = objetoActualizable.getInfo()[1];</span>
+<span class="fc" id="L464">        String modeloActualizado = objetoActualizable.getInfo()[2];</span>
+<span class="fc" id="L465">        String valorActualizado = objetoActualizable.getInfo()[3];</span>
 
-<span class="fc" id="L345">        getTxId().setText(idActualizado);</span>
-<span class="fc" id="L346">        getTxMarca().setText(marcaActualizada);</span>
-<span class="fc" id="L347">        getTxModelo().setText(modeloActualizado);</span>
-<span class="fc" id="L348">        getTxValor().setText(valorActualizado);</span>
+<span class="fc" id="L467">        getTxId().setText(idActualizado);</span>
+<span class="fc" id="L468">        getTxMarca().setText(marcaActualizada);</span>
+<span class="fc" id="L469">        getTxModelo().setText(modeloActualizado);</span>
+<span class="fc" id="L470">        getTxValor().setText(valorActualizado);</span>
 
-<span class="fc" id="L350">        objetoActualizable.calculate_next_pos(Ruta.COTA_DE_DESPLAZAMIENTO_X, Ruta.COTA_DE_DESPLAZAMIENTO_Y);</span>
+<span class="fc" id="L472">        objetoActualizable.calculate_next_pos(Ruta.COTA_DE_DESPLAZAMIENTO_X, Ruta.COTA_DE_DESPLAZAMIENTO_Y);</span>
 
-<span class="fc" id="L352">        String valorPosXActualizado = objetoActualizable.getInfo()[4];</span>
-<span class="fc" id="L353">        String valorPosYActualizado = objetoActualizable.getInfo()[5];</span>
+<span class="fc" id="L474">        String valorPosXActualizado = objetoActualizable.getInfo()[4];</span>
+<span class="fc" id="L475">        String valorPosYActualizado = objetoActualizable.getInfo()[5];</span>
 
-<span class="fc" id="L355">        getTxPosicionX().setText(valorPosXActualizado);</span>
-<span class="fc" id="L356">        getTxPosicionY().setText(valorPosYActualizado);</span>
-<span class="fc" id="L357">    }</span>
+<span class="fc" id="L477">        getTxPosicionX().setText(valorPosXActualizado);</span>
+<span class="fc" id="L478">        getTxPosicionY().setText(valorPosYActualizado);</span>
+<span class="fc" id="L479">    }</span>
 
-    public JButton getBtEliminar() {
-<span class="pc bpc" id="L360" title="1 of 2 branches missed.">        if (btEliminar == null) {</span>
-<span class="fc" id="L361">            btEliminar = new JButton(&quot;Eliminar&quot;);</span>
-<span class="fc" id="L362">            btEliminar.addActionListener(new ActionListener() {</span>
+    /**
+     * Getter del botón de eliminar.
+     *
+     * Este método devuelve el valor que tiene el objeto del botón eliminar para el atributo 'btEliminar'.
+     * Como actionPerformed se procede a eliminar el objeto seleccionado tanto de la lista de la interfaz gráfica
+     * como de la lista perteneciente a la lógica instanciada de la clase 'Casa', de tal forma que no haya registro
+     * de dicho objeto. Además, se vacían los campos para continuar usando la aplicación.
+     * @return El botón de eliminar.
+     */
+    private JButton getBtEliminar() {
+<span class="pc bpc" id="L491" title="1 of 2 branches missed.">        if (btEliminar == null) {</span>
+<span class="fc" id="L492">            btEliminar = new JButton(&quot;Eliminar&quot;);</span>
+<span class="fc" id="L493">            btEliminar.addActionListener(new ActionListener() {</span>
                 public void actionPerformed(ActionEvent arg0) {
-<span class="pc bpc" id="L364" title="1 of 2 branches missed.">                    if (!listObjetos.isSelectionEmpty()) {</span>
-<span class="nc" id="L365">                        Objeto_Casa objetoABorrar = listObjetos.getSelectedValue();</span>
-<span class="nc" id="L366">                        modelObjetos.removeElement(objetoABorrar);</span>
-<span class="nc" id="L367">                        casa.eliminar_objeto(objetoABorrar);</span>
-<span class="nc" id="L368">                        vaciarCampos();</span>
-<span class="nc" id="L369">                    } else {</span>
-<span class="fc" id="L370">                        JOptionPane.showMessageDialog(null, &quot;Puede que la lista &quot; +</span>
+<span class="pc bpc" id="L495" title="1 of 2 branches missed.">                    if (!listObjetos.isSelectionEmpty()) {</span>
+<span class="nc" id="L496">                        Objeto_Casa objetoABorrar = listObjetos.getSelectedValue();</span>
+<span class="nc" id="L497">                        modelObjetos.removeElement(objetoABorrar);</span>
+<span class="nc" id="L498">                        casa.eliminar_objeto(objetoABorrar);</span>
+<span class="nc" id="L499">                        vaciarCampos();</span>
+<span class="nc" id="L500">                    } else {</span>
+<span class="fc" id="L501">                        JOptionPane.showMessageDialog(null, &quot;Puede que la lista &quot; +</span>
                                 &quot;se encuentre vacía o no haya seleccionado ningún elemento.&quot;);
                     }
-<span class="fc" id="L373">                }</span>
+<span class="fc" id="L504">                }</span>
             });
         }
-<span class="fc" id="L376">        return btEliminar;</span>
+<span class="fc" id="L507">        return btEliminar;</span>
     }
 
+    /**
+     * Método para vaciar los campos.
+     *
+     * En este método se vacían todos los campos pertenecientes en el panel de información del objeto.
+     * Para ello se 'settean' los valores como una cadena vacía.
+     */
     public void vaciarCampos() {
-<span class="fc" id="L380">        getTxId().setText(&quot;&quot;);</span>
-<span class="fc" id="L381">        getTxMarca().setText(&quot;&quot;);</span>
-<span class="fc" id="L382">        getTxModelo().setText(&quot;&quot;);</span>
-<span class="fc" id="L383">        getTxValor().setText(&quot;&quot;);</span>
-<span class="fc" id="L384">        getTxPosicionX().setText(&quot;&quot;);</span>
-<span class="fc" id="L385">        getTxPosicionY().setText(&quot;&quot;);</span>
-<span class="fc" id="L386">    }</span>
+<span class="fc" id="L517">        getTxId().setText(&quot;&quot;);</span>
+<span class="fc" id="L518">        getTxMarca().setText(&quot;&quot;);</span>
+<span class="fc" id="L519">        getTxModelo().setText(&quot;&quot;);</span>
+<span class="fc" id="L520">        getTxValor().setText(&quot;&quot;);</span>
+<span class="fc" id="L521">        getTxPosicionX().setText(&quot;&quot;);</span>
+<span class="fc" id="L522">        getTxPosicionY().setText(&quot;&quot;);</span>
+<span class="fc" id="L523">    }</span>
 
-    public JLabel getLbInformacionObjetos() {
-<span class="pc bpc" id="L389" title="1 of 2 branches missed.">        if (lbInformacionObjetos == null) {</span>
-<span class="fc" id="L390">            lbInformacionObjetos = new JLabel(&quot;Informacion del objeto:&quot;);</span>
-<span class="fc" id="L391">            lbInformacionObjetos.setHorizontalAlignment(SwingConstants.CENTER);</span>
-<span class="fc" id="L392">            lbInformacionObjetos.setFont(new Font(&quot;Sylfaen&quot;, Font.BOLD, 22));</span>
+    /**
+     * Getter de la etiqueta de la información de los objetos.
+     *
+     * Este método devuelve el valor que tiene el objeto de la etiqueta de información de objetos para el atributo 'lbInformacionObjetos'.
+     * @return La etiqueta con el texto sobre la información de los objetos.
+     */
+    private JLabel getLbInformacionObjetos() {
+<span class="pc bpc" id="L532" title="1 of 2 branches missed.">        if (lbInformacionObjetos == null) {</span>
+<span class="fc" id="L533">            lbInformacionObjetos = new JLabel(&quot;Informacion del objeto:&quot;);</span>
+<span class="fc" id="L534">            lbInformacionObjetos.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L535">            lbInformacionObjetos.setFont(new Font(&quot;Sylfaen&quot;, Font.BOLD, 22));</span>
         }
-<span class="fc" id="L394">        return lbInformacionObjetos;</span>
+<span class="fc" id="L537">        return lbInformacionObjetos;</span>
     }
 
-    public JPanel getPnCampos() {
-<span class="pc bpc" id="L398" title="1 of 2 branches missed.">        if (pnCampos == null) {</span>
-<span class="fc" id="L399">            pnCampos = new JPanel();</span>
-<span class="fc" id="L400">            pnCampos.setToolTipText(&quot;Cuando esta opci\u00F3n est\u00E1 deshabilitada, solo podr\u00E1 mostrarse la informaci\u00F3n. En caso contrario, se podr\u00E1n modificar los campos.&quot;);</span>
-<span class="fc" id="L401">            GridBagLayout gbl_pnCampos = new GridBagLayout();</span>
-<span class="fc" id="L402">            gbl_pnCampos.columnWidths = new int[]{119, 223, 0};</span>
-<span class="fc" id="L403">            gbl_pnCampos.rowHeights = new int[]{60, 60, 60, 60, 60, 0};</span>
-<span class="fc" id="L404">            gbl_pnCampos.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};</span>
-<span class="fc" id="L405">            gbl_pnCampos.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};</span>
-<span class="fc" id="L406">            pnCampos.setLayout(gbl_pnCampos);</span>
-<span class="fc" id="L407">            GridBagConstraints gbc_lbId = new GridBagConstraints();</span>
-<span class="fc" id="L408">            gbc_lbId.fill = GridBagConstraints.BOTH;</span>
-<span class="fc" id="L409">            gbc_lbId.insets = new Insets(0, 0, 5, 5);</span>
-<span class="fc" id="L410">            gbc_lbId.gridx = 0;</span>
-<span class="fc" id="L411">            gbc_lbId.gridy = 0;</span>
-<span class="fc" id="L412">            pnCampos.add(getLbId(), gbc_lbId);</span>
-<span class="fc" id="L413">            GridBagConstraints gbc_txId = new GridBagConstraints();</span>
-<span class="fc" id="L414">            gbc_txId.fill = GridBagConstraints.BOTH;</span>
-<span class="fc" id="L415">            gbc_txId.insets = new Insets(0, 0, 5, 0);</span>
-<span class="fc" id="L416">            gbc_txId.gridx = 1;</span>
-<span class="fc" id="L417">            gbc_txId.gridy = 0;</span>
-<span class="fc" id="L418">            pnCampos.add(getTxId(), gbc_txId);</span>
-<span class="fc" id="L419">            GridBagConstraints gbc_lbMarca = new GridBagConstraints();</span>
-<span class="fc" id="L420">            gbc_lbMarca.fill = GridBagConstraints.BOTH;</span>
-<span class="fc" id="L421">            gbc_lbMarca.insets = new Insets(0, 0, 5, 5);</span>
-<span class="fc" id="L422">            gbc_lbMarca.gridx = 0;</span>
-<span class="fc" id="L423">            gbc_lbMarca.gridy = 1;</span>
-<span class="fc" id="L424">            pnCampos.add(getLbMarca(), gbc_lbMarca);</span>
-<span class="fc" id="L425">            GridBagConstraints gbc_txMarca = new GridBagConstraints();</span>
-<span class="fc" id="L426">            gbc_txMarca.fill = GridBagConstraints.BOTH;</span>
-<span class="fc" id="L427">            gbc_txMarca.insets = new Insets(0, 0, 5, 0);</span>
-<span class="fc" id="L428">            gbc_txMarca.gridx = 1;</span>
-<span class="fc" id="L429">            gbc_txMarca.gridy = 1;</span>
-<span class="fc" id="L430">            pnCampos.add(getTxMarca(), gbc_txMarca);</span>
-<span class="fc" id="L431">            GridBagConstraints gbc_lbModelo = new GridBagConstraints();</span>
-<span class="fc" id="L432">            gbc_lbModelo.fill = GridBagConstraints.BOTH;</span>
-<span class="fc" id="L433">            gbc_lbModelo.insets = new Insets(0, 0, 5, 5);</span>
-<span class="fc" id="L434">            gbc_lbModelo.gridx = 0;</span>
-<span class="fc" id="L435">            gbc_lbModelo.gridy = 2;</span>
-<span class="fc" id="L436">            pnCampos.add(getLbModelo(), gbc_lbModelo);</span>
-<span class="fc" id="L437">            GridBagConstraints gbc_txModelo = new GridBagConstraints();</span>
-<span class="fc" id="L438">            gbc_txModelo.fill = GridBagConstraints.BOTH;</span>
-<span class="fc" id="L439">            gbc_txModelo.insets = new Insets(0, 0, 5, 0);</span>
-<span class="fc" id="L440">            gbc_txModelo.gridx = 1;</span>
-<span class="fc" id="L441">            gbc_txModelo.gridy = 2;</span>
-<span class="fc" id="L442">            pnCampos.add(getTxModelo(), gbc_txModelo);</span>
-<span class="fc" id="L443">            GridBagConstraints gbc_lbValor = new GridBagConstraints();</span>
-<span class="fc" id="L444">            gbc_lbValor.fill = GridBagConstraints.BOTH;</span>
-<span class="fc" id="L445">            gbc_lbValor.insets = new Insets(0, 0, 5, 5);</span>
-<span class="fc" id="L446">            gbc_lbValor.gridx = 0;</span>
-<span class="fc" id="L447">            gbc_lbValor.gridy = 3;</span>
-<span class="fc" id="L448">            pnCampos.add(getLbValor(), gbc_lbValor);</span>
-<span class="fc" id="L449">            GridBagConstraints gbc_txValor = new GridBagConstraints();</span>
-<span class="fc" id="L450">            gbc_txValor.fill = GridBagConstraints.BOTH;</span>
-<span class="fc" id="L451">            gbc_txValor.insets = new Insets(0, 0, 5, 0);</span>
-<span class="fc" id="L452">            gbc_txValor.gridx = 1;</span>
-<span class="fc" id="L453">            gbc_txValor.gridy = 3;</span>
-<span class="fc" id="L454">            pnCampos.add(getTxValor(), gbc_txValor);</span>
-<span class="fc" id="L455">            GridBagConstraints gbc_separator = new GridBagConstraints();</span>
-<span class="fc" id="L456">            gbc_separator.fill = GridBagConstraints.BOTH;</span>
-<span class="fc" id="L457">            gbc_separator.insets = new Insets(0, 0, 0, 5);</span>
-<span class="fc" id="L458">            gbc_separator.gridx = 0;</span>
-<span class="fc" id="L459">            gbc_separator.gridy = 4;</span>
-<span class="fc" id="L460">            pnCampos.add(getSeparator(), gbc_separator);</span>
-<span class="fc" id="L461">            GridBagConstraints gbc_chckbxEditar = new GridBagConstraints();</span>
-<span class="fc" id="L462">            gbc_chckbxEditar.fill = GridBagConstraints.BOTH;</span>
-<span class="fc" id="L463">            gbc_chckbxEditar.gridx = 1;</span>
-<span class="fc" id="L464">            gbc_chckbxEditar.gridy = 4;</span>
-<span class="fc" id="L465">            pnCampos.add(getChckbxEditar(), gbc_chckbxEditar);</span>
+    /**
+     * Getter del panel de campos.
+     *
+     * Este método devuelve el valor que tiene el objeto del panel de campos para el atributo 'pnCampos'.
+     * @return El panel de campos.
+     */
+    private JPanel getPnCampos() {
+<span class="pc bpc" id="L547" title="1 of 2 branches missed.">        if (pnCampos == null) {</span>
+<span class="fc" id="L548">            pnCampos = new JPanel();</span>
+<span class="fc" id="L549">            pnCampos.setToolTipText(&quot;Cuando esta opci\u00F3n est\u00E1 deshabilitada, solo podr\u00E1 mostrarse la informaci\u00F3n. En caso contrario, se podr\u00E1n modificar los campos.&quot;);</span>
+<span class="fc" id="L550">            GridBagLayout gbl_pnCampos = new GridBagLayout();</span>
+<span class="fc" id="L551">            gbl_pnCampos.columnWidths = new int[]{119, 223, 0};</span>
+<span class="fc" id="L552">            gbl_pnCampos.rowHeights = new int[]{60, 60, 60, 60, 60, 0};</span>
+<span class="fc" id="L553">            gbl_pnCampos.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};</span>
+<span class="fc" id="L554">            gbl_pnCampos.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};</span>
+<span class="fc" id="L555">            pnCampos.setLayout(gbl_pnCampos);</span>
+<span class="fc" id="L556">            GridBagConstraints gbc_lbId = new GridBagConstraints();</span>
+<span class="fc" id="L557">            gbc_lbId.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L558">            gbc_lbId.insets = new Insets(0, 0, 5, 5);</span>
+<span class="fc" id="L559">            gbc_lbId.gridx = 0;</span>
+<span class="fc" id="L560">            gbc_lbId.gridy = 0;</span>
+<span class="fc" id="L561">            pnCampos.add(getLbId(), gbc_lbId);</span>
+<span class="fc" id="L562">            GridBagConstraints gbc_txId = new GridBagConstraints();</span>
+<span class="fc" id="L563">            gbc_txId.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L564">            gbc_txId.insets = new Insets(0, 0, 5, 0);</span>
+<span class="fc" id="L565">            gbc_txId.gridx = 1;</span>
+<span class="fc" id="L566">            gbc_txId.gridy = 0;</span>
+<span class="fc" id="L567">            pnCampos.add(getTxId(), gbc_txId);</span>
+<span class="fc" id="L568">            GridBagConstraints gbc_lbMarca = new GridBagConstraints();</span>
+<span class="fc" id="L569">            gbc_lbMarca.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L570">            gbc_lbMarca.insets = new Insets(0, 0, 5, 5);</span>
+<span class="fc" id="L571">            gbc_lbMarca.gridx = 0;</span>
+<span class="fc" id="L572">            gbc_lbMarca.gridy = 1;</span>
+<span class="fc" id="L573">            pnCampos.add(getLbMarca(), gbc_lbMarca);</span>
+<span class="fc" id="L574">            GridBagConstraints gbc_txMarca = new GridBagConstraints();</span>
+<span class="fc" id="L575">            gbc_txMarca.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L576">            gbc_txMarca.insets = new Insets(0, 0, 5, 0);</span>
+<span class="fc" id="L577">            gbc_txMarca.gridx = 1;</span>
+<span class="fc" id="L578">            gbc_txMarca.gridy = 1;</span>
+<span class="fc" id="L579">            pnCampos.add(getTxMarca(), gbc_txMarca);</span>
+<span class="fc" id="L580">            GridBagConstraints gbc_lbModelo = new GridBagConstraints();</span>
+<span class="fc" id="L581">            gbc_lbModelo.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L582">            gbc_lbModelo.insets = new Insets(0, 0, 5, 5);</span>
+<span class="fc" id="L583">            gbc_lbModelo.gridx = 0;</span>
+<span class="fc" id="L584">            gbc_lbModelo.gridy = 2;</span>
+<span class="fc" id="L585">            pnCampos.add(getLbModelo(), gbc_lbModelo);</span>
+<span class="fc" id="L586">            GridBagConstraints gbc_txModelo = new GridBagConstraints();</span>
+<span class="fc" id="L587">            gbc_txModelo.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L588">            gbc_txModelo.insets = new Insets(0, 0, 5, 0);</span>
+<span class="fc" id="L589">            gbc_txModelo.gridx = 1;</span>
+<span class="fc" id="L590">            gbc_txModelo.gridy = 2;</span>
+<span class="fc" id="L591">            pnCampos.add(getTxModelo(), gbc_txModelo);</span>
+<span class="fc" id="L592">            GridBagConstraints gbc_lbValor = new GridBagConstraints();</span>
+<span class="fc" id="L593">            gbc_lbValor.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L594">            gbc_lbValor.insets = new Insets(0, 0, 5, 5);</span>
+<span class="fc" id="L595">            gbc_lbValor.gridx = 0;</span>
+<span class="fc" id="L596">            gbc_lbValor.gridy = 3;</span>
+<span class="fc" id="L597">            pnCampos.add(getLbValor(), gbc_lbValor);</span>
+<span class="fc" id="L598">            GridBagConstraints gbc_txValor = new GridBagConstraints();</span>
+<span class="fc" id="L599">            gbc_txValor.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L600">            gbc_txValor.insets = new Insets(0, 0, 5, 0);</span>
+<span class="fc" id="L601">            gbc_txValor.gridx = 1;</span>
+<span class="fc" id="L602">            gbc_txValor.gridy = 3;</span>
+<span class="fc" id="L603">            pnCampos.add(getTxValor(), gbc_txValor);</span>
+<span class="fc" id="L604">            GridBagConstraints gbc_separator = new GridBagConstraints();</span>
+<span class="fc" id="L605">            gbc_separator.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L606">            gbc_separator.insets = new Insets(0, 0, 0, 5);</span>
+<span class="fc" id="L607">            gbc_separator.gridx = 0;</span>
+<span class="fc" id="L608">            gbc_separator.gridy = 4;</span>
+<span class="fc" id="L609">            pnCampos.add(getSeparator(), gbc_separator);</span>
+<span class="fc" id="L610">            GridBagConstraints gbc_chckbxEditar = new GridBagConstraints();</span>
+<span class="fc" id="L611">            gbc_chckbxEditar.fill = GridBagConstraints.BOTH;</span>
+<span class="fc" id="L612">            gbc_chckbxEditar.gridx = 1;</span>
+<span class="fc" id="L613">            gbc_chckbxEditar.gridy = 4;</span>
+<span class="fc" id="L614">            pnCampos.add(getChckbxEditar(), gbc_chckbxEditar);</span>
         }
-<span class="fc" id="L467">        return pnCampos;</span>
+<span class="fc" id="L616">        return pnCampos;</span>
     }
 
-    public JPanel getPnPosiciones() {
-<span class="pc bpc" id="L471" title="1 of 2 branches missed.">        if (pnPosiciones == null) {</span>
-<span class="fc" id="L472">            pnPosiciones = new JPanel();</span>
-<span class="fc" id="L473">            GridBagLayout gbl_pnPosiciones = new GridBagLayout();</span>
-<span class="fc" id="L474">            gbl_pnPosiciones.columnWidths = new int[]{104, 137, 94, 137, 0};</span>
-<span class="fc" id="L475">            gbl_pnPosiciones.rowHeights = new int[]{20, 0};</span>
-<span class="fc" id="L476">            gbl_pnPosiciones.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};</span>
-<span class="fc" id="L477">            gbl_pnPosiciones.rowWeights = new double[]{0.0, Double.MIN_VALUE};</span>
-<span class="fc" id="L478">            pnPosiciones.setLayout(gbl_pnPosiciones);</span>
-<span class="fc" id="L479">            GridBagConstraints gbc_lbPosicionX = new GridBagConstraints();</span>
-<span class="fc" id="L480">            gbc_lbPosicionX.insets = new Insets(0, 0, 0, 5);</span>
-<span class="fc" id="L481">            gbc_lbPosicionX.gridx = 0;</span>
-<span class="fc" id="L482">            gbc_lbPosicionX.gridy = 0;</span>
-<span class="fc" id="L483">            pnPosiciones.add(getLbPosicionX(), gbc_lbPosicionX);</span>
-<span class="fc" id="L484">            GridBagConstraints gbc_txPosicionX = new GridBagConstraints();</span>
-<span class="fc" id="L485">            gbc_txPosicionX.fill = GridBagConstraints.HORIZONTAL;</span>
-<span class="fc" id="L486">            gbc_txPosicionX.insets = new Insets(0, 0, 0, 5);</span>
-<span class="fc" id="L487">            gbc_txPosicionX.gridx = 1;</span>
-<span class="fc" id="L488">            gbc_txPosicionX.gridy = 0;</span>
-<span class="fc" id="L489">            pnPosiciones.add(getTxPosicionX(), gbc_txPosicionX);</span>
-<span class="fc" id="L490">            GridBagConstraints gbc_lbPosicionY = new GridBagConstraints();</span>
-<span class="fc" id="L491">            gbc_lbPosicionY.insets = new Insets(0, 0, 0, 5);</span>
-<span class="fc" id="L492">            gbc_lbPosicionY.gridx = 2;</span>
-<span class="fc" id="L493">            gbc_lbPosicionY.gridy = 0;</span>
-<span class="fc" id="L494">            pnPosiciones.add(getLbPosicionY(), gbc_lbPosicionY);</span>
-<span class="fc" id="L495">            GridBagConstraints gbc_txPosicionY = new GridBagConstraints();</span>
-<span class="fc" id="L496">            gbc_txPosicionY.fill = GridBagConstraints.HORIZONTAL;</span>
-<span class="fc" id="L497">            gbc_txPosicionY.gridx = 3;</span>
-<span class="fc" id="L498">            gbc_txPosicionY.gridy = 0;</span>
-<span class="fc" id="L499">            pnPosiciones.add(getTxPosicionY(), gbc_txPosicionY);</span>
+    /**
+     * Getter del panel de posiciones.
+     *
+     * Este método devuelve el valor que tiene el objeto del panel de posiciones para el atributo 'pnPosiciones'.
+     * @return El panel de posiciones.
+     */
+    private JPanel getPnPosiciones() {
+<span class="pc bpc" id="L626" title="1 of 2 branches missed.">        if (pnPosiciones == null) {</span>
+<span class="fc" id="L627">            pnPosiciones = new JPanel();</span>
+<span class="fc" id="L628">            GridBagLayout gbl_pnPosiciones = new GridBagLayout();</span>
+<span class="fc" id="L629">            gbl_pnPosiciones.columnWidths = new int[]{104, 137, 94, 137, 0};</span>
+<span class="fc" id="L630">            gbl_pnPosiciones.rowHeights = new int[]{20, 0};</span>
+<span class="fc" id="L631">            gbl_pnPosiciones.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};</span>
+<span class="fc" id="L632">            gbl_pnPosiciones.rowWeights = new double[]{0.0, Double.MIN_VALUE};</span>
+<span class="fc" id="L633">            pnPosiciones.setLayout(gbl_pnPosiciones);</span>
+<span class="fc" id="L634">            GridBagConstraints gbc_lbPosicionX = new GridBagConstraints();</span>
+<span class="fc" id="L635">            gbc_lbPosicionX.insets = new Insets(0, 0, 0, 5);</span>
+<span class="fc" id="L636">            gbc_lbPosicionX.gridx = 0;</span>
+<span class="fc" id="L637">            gbc_lbPosicionX.gridy = 0;</span>
+<span class="fc" id="L638">            pnPosiciones.add(getLbPosicionX(), gbc_lbPosicionX);</span>
+<span class="fc" id="L639">            GridBagConstraints gbc_txPosicionX = new GridBagConstraints();</span>
+<span class="fc" id="L640">            gbc_txPosicionX.fill = GridBagConstraints.HORIZONTAL;</span>
+<span class="fc" id="L641">            gbc_txPosicionX.insets = new Insets(0, 0, 0, 5);</span>
+<span class="fc" id="L642">            gbc_txPosicionX.gridx = 1;</span>
+<span class="fc" id="L643">            gbc_txPosicionX.gridy = 0;</span>
+<span class="fc" id="L644">            pnPosiciones.add(getTxPosicionX(), gbc_txPosicionX);</span>
+<span class="fc" id="L645">            GridBagConstraints gbc_lbPosicionY = new GridBagConstraints();</span>
+<span class="fc" id="L646">            gbc_lbPosicionY.insets = new Insets(0, 0, 0, 5);</span>
+<span class="fc" id="L647">            gbc_lbPosicionY.gridx = 2;</span>
+<span class="fc" id="L648">            gbc_lbPosicionY.gridy = 0;</span>
+<span class="fc" id="L649">            pnPosiciones.add(getLbPosicionY(), gbc_lbPosicionY);</span>
+<span class="fc" id="L650">            GridBagConstraints gbc_txPosicionY = new GridBagConstraints();</span>
+<span class="fc" id="L651">            gbc_txPosicionY.fill = GridBagConstraints.HORIZONTAL;</span>
+<span class="fc" id="L652">            gbc_txPosicionY.gridx = 3;</span>
+<span class="fc" id="L653">            gbc_txPosicionY.gridy = 0;</span>
+<span class="fc" id="L654">            pnPosiciones.add(getTxPosicionY(), gbc_txPosicionY);</span>
         }
-<span class="fc" id="L501">        return pnPosiciones;</span>
+<span class="fc" id="L656">        return pnPosiciones;</span>
     }
 
-    public JLabel getLbId() {
-<span class="pc bpc" id="L505" title="1 of 2 branches missed.">        if (lbId == null) {</span>
-<span class="fc" id="L506">            lbId = new JLabel(&quot;ID: &quot;);</span>
-<span class="fc" id="L507">            lbId.setHorizontalAlignment(SwingConstants.CENTER);</span>
-<span class="fc" id="L508">            lbId.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
+    /**
+     * Getter de la etiqueta del título para el ID.
+     *
+     * Este método devuelve el valor que tiene el objeto de la etiqueta del título de ID para el atributo 'lbId'.
+     * @return La etiqueta con el texto sobre el título de ID.
+     */
+    private JLabel getLbId() {
+<span class="pc bpc" id="L666" title="1 of 2 branches missed.">        if (lbId == null) {</span>
+<span class="fc" id="L667">            lbId = new JLabel(&quot;ID: &quot;);</span>
+<span class="fc" id="L668">            lbId.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L669">            lbId.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
         }
-<span class="fc" id="L510">        return lbId;</span>
+<span class="fc" id="L671">        return lbId;</span>
     }
 
-    public JTextField getTxId() {
-<span class="fc bfc" id="L514" title="All 2 branches covered.">        if (txId == null) {</span>
-<span class="fc" id="L515">            txId = new JTextField();</span>
-<span class="fc" id="L516">            txId.setColumns(10);</span>
+    /**
+     * Getter del campo de texto para el ID.
+     *
+     * Este método devuelve el valor que tiene el objeto del campo de texto de ID para el atributo 'txId'.
+     * @return El campo de texto para el ID.
+     */
+    private JTextField getTxId() {
+<span class="fc bfc" id="L681" title="All 2 branches covered.">        if (txId == null) {</span>
+<span class="fc" id="L682">            txId = new JTextField();</span>
+<span class="fc" id="L683">            txId.setColumns(10);</span>
         }
-<span class="fc" id="L518">        return txId;</span>
+<span class="fc" id="L685">        return txId;</span>
     }
 
-    public JLabel getLbMarca() {
-<span class="pc bpc" id="L522" title="1 of 2 branches missed.">        if (lbMarca == null) {</span>
-<span class="fc" id="L523">            lbMarca = new JLabel(&quot;Marca: &quot;);</span>
-<span class="fc" id="L524">            lbMarca.setHorizontalAlignment(SwingConstants.CENTER);</span>
-<span class="fc" id="L525">            lbMarca.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
+    /**
+     * Getter de la etiqueta del título para la marca.
+     *
+     * Este método devuelve el valor que tiene el objeto de la etiqueta del título de marca para el atributo 'lbMarca'.
+     * @return La etiqueta con el texto sobre el título de ID.
+     */
+    private JLabel getLbMarca() {
+<span class="pc bpc" id="L695" title="1 of 2 branches missed.">        if (lbMarca == null) {</span>
+<span class="fc" id="L696">            lbMarca = new JLabel(&quot;Marca: &quot;);</span>
+<span class="fc" id="L697">            lbMarca.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L698">            lbMarca.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
         }
-<span class="fc" id="L527">        return lbMarca;</span>
+<span class="fc" id="L700">        return lbMarca;</span>
     }
 
-    public JTextField getTxMarca() {
-<span class="fc bfc" id="L531" title="All 2 branches covered.">        if (txMarca == null) {</span>
-<span class="fc" id="L532">            txMarca = new JTextField();</span>
-<span class="fc" id="L533">            txMarca.setFont(new Font(&quot;Tahoma&quot;, Font.PLAIN, 11));</span>
-<span class="fc" id="L534">            txMarca.setColumns(10);</span>
+    /**
+     * Getter del campo de texto para la marca.
+     *
+     * Este método devuelve el valor que tiene el objeto del campo de texto de la marca para el atributo 'txMarca'.
+     * @return El campo de texto para la marca.
+     */
+    private JTextField getTxMarca() {
+<span class="fc bfc" id="L710" title="All 2 branches covered.">        if (txMarca == null) {</span>
+<span class="fc" id="L711">            txMarca = new JTextField();</span>
+<span class="fc" id="L712">            txMarca.setFont(new Font(&quot;Tahoma&quot;, Font.PLAIN, 11));</span>
+<span class="fc" id="L713">            txMarca.setColumns(10);</span>
         }
-<span class="fc" id="L536">        return txMarca;</span>
+<span class="fc" id="L715">        return txMarca;</span>
     }
 
-    public JLabel getLbModelo() {
-<span class="pc bpc" id="L540" title="1 of 2 branches missed.">        if (lbModelo == null) {</span>
-<span class="fc" id="L541">            lbModelo = new JLabel(&quot;Modelo:&quot;);</span>
-<span class="fc" id="L542">            lbModelo.setHorizontalAlignment(SwingConstants.CENTER);</span>
-<span class="fc" id="L543">            lbModelo.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
+    /**
+     * Getter de la etiqueta del título para el modelo.
+     *
+     * Este método devuelve el valor que tiene el objeto de la etiqueta del título del modelo para el atributo 'lbModelo'.
+     * @return La etiqueta con el texto para el título del modelo.
+     */
+    private JLabel getLbModelo() {
+<span class="pc bpc" id="L725" title="1 of 2 branches missed.">        if (lbModelo == null) {</span>
+<span class="fc" id="L726">            lbModelo = new JLabel(&quot;Modelo:&quot;);</span>
+<span class="fc" id="L727">            lbModelo.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L728">            lbModelo.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
         }
-<span class="fc" id="L545">        return lbModelo;</span>
+<span class="fc" id="L730">        return lbModelo;</span>
     }
 
-    public JTextField getTxModelo() {
-<span class="fc bfc" id="L549" title="All 2 branches covered.">        if (txModelo == null) {</span>
-<span class="fc" id="L550">            txModelo = new JTextField();</span>
-<span class="fc" id="L551">            txModelo.setColumns(10);</span>
+    /**
+     * Getter del campo de texto para el modelo.
+     *
+     * Este método devuelve el valor que tiene el objeto del campo de texto del modelo para el atributo 'txModelo'.
+     * @return El campo de texto para el modelo.
+     */
+    private JTextField getTxModelo() {
+<span class="fc bfc" id="L740" title="All 2 branches covered.">        if (txModelo == null) {</span>
+<span class="fc" id="L741">            txModelo = new JTextField();</span>
+<span class="fc" id="L742">            txModelo.setColumns(10);</span>
         }
-<span class="fc" id="L553">        return txModelo;</span>
+<span class="fc" id="L744">        return txModelo;</span>
     }
 
-    public JLabel getLbValor() {
-<span class="pc bpc" id="L557" title="1 of 2 branches missed.">        if (lbValor == null) {</span>
-<span class="fc" id="L558">            lbValor = new JLabel(&quot;Valor: &quot;);</span>
-<span class="fc" id="L559">            lbValor.setHorizontalAlignment(SwingConstants.CENTER);</span>
-<span class="fc" id="L560">            lbValor.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
+    /**
+     * Getter de la etiqueta del título para el valor.
+     *
+     * Este método devuelve el valor que tiene el objeto de la etiqueta del título de valor para el atributo 'lbValor'.
+     * @return La etiqueta con el texto para el título del valor.
+     */
+    private JLabel getLbValor() {
+<span class="pc bpc" id="L754" title="1 of 2 branches missed.">        if (lbValor == null) {</span>
+<span class="fc" id="L755">            lbValor = new JLabel(&quot;Valor: &quot;);</span>
+<span class="fc" id="L756">            lbValor.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L757">            lbValor.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
         }
-<span class="fc" id="L562">        return lbValor;</span>
+<span class="fc" id="L759">        return lbValor;</span>
     }
 
-    public JTextField getTxValor() {
-<span class="fc bfc" id="L566" title="All 2 branches covered.">        if (txValor == null) {</span>
-<span class="fc" id="L567">            txValor = new JTextField();</span>
-<span class="fc" id="L568">            txValor.setColumns(10);</span>
+    /**
+     * Getter del campo de texto para el valor.
+     *
+     * Este método devuelve el valor que tiene el objeto del campo de texto de valor para el atributo 'txValor'.
+     * @return El campo de texto para el valor.
+     */
+    private JTextField getTxValor() {
+<span class="fc bfc" id="L769" title="All 2 branches covered.">        if (txValor == null) {</span>
+<span class="fc" id="L770">            txValor = new JTextField();</span>
+<span class="fc" id="L771">            txValor.setColumns(10);</span>
         }
-<span class="fc" id="L570">        return txValor;</span>
+<span class="fc" id="L773">        return txValor;</span>
     }
 
-    public JCheckBox getChckbxEditar() {
-<span class="fc bfc" id="L574" title="All 2 branches covered.">        if (chckbxEditar == null) {</span>
-<span class="fc" id="L575">            chckbxEditar = new JCheckBox(&quot;Editar&quot;);</span>
-<span class="fc" id="L576">            chckbxEditar.addActionListener(new ActionListener() {</span>
+    /**
+     * Getter del checkbox de editar.
+     *
+     * Este método devuelve el valor que tiene el objeto del checkbox de editar para el atributo 'chckbxEditar'.
+     * @return El checkbox de editar.
+     */
+    private JCheckBox getChckbxEditar() {
+<span class="fc bfc" id="L783" title="All 2 branches covered.">        if (chckbxEditar == null) {</span>
+<span class="fc" id="L784">            chckbxEditar = new JCheckBox(&quot;Editar&quot;);</span>
+<span class="fc" id="L785">            chckbxEditar.addActionListener(new ActionListener() {</span>
                 public void actionPerformed(ActionEvent arg0) {
-<span class="nc" id="L578">                    boolean isSelected = getChckbxEditar().isSelected();</span>
-<span class="nc" id="L579">                    getTxId().setEditable(isSelected);</span>
-<span class="nc" id="L580">                    getTxMarca().setEditable(isSelected);</span>
-<span class="nc" id="L581">                    getTxModelo().setEditable(isSelected);</span>
-<span class="nc" id="L582">                    getTxValor().setEditable(isSelected);</span>
-<span class="nc" id="L583">                }</span>
+<span class="nc" id="L787">                    boolean isSelected = getChckbxEditar().isSelected();</span>
+<span class="nc" id="L788">                    getTxId().setEditable(isSelected);</span>
+<span class="nc" id="L789">                    getTxMarca().setEditable(isSelected);</span>
+<span class="nc" id="L790">                    getTxModelo().setEditable(isSelected);</span>
+<span class="nc" id="L791">                    getTxValor().setEditable(isSelected);</span>
+<span class="nc" id="L792">                }</span>
             });
-<span class="fc" id="L585">            chckbxEditar.setHorizontalAlignment(SwingConstants.RIGHT);</span>
-<span class="fc" id="L586">            chckbxEditar.setSelected(true);</span>
+<span class="fc" id="L794">            chckbxEditar.setHorizontalAlignment(SwingConstants.RIGHT);</span>
+<span class="fc" id="L795">            chckbxEditar.setSelected(true);</span>
         }
-<span class="fc" id="L588">        return chckbxEditar;</span>
+<span class="fc" id="L797">        return chckbxEditar;</span>
     }
 
-    public JSeparator getSeparator() {
-<span class="pc bpc" id="L592" title="1 of 2 branches missed.">        if (separator == null) {</span>
-<span class="fc" id="L593">            separator = new JSeparator();</span>
-<span class="fc" id="L594">            separator.setForeground(SystemColor.scrollbar);</span>
+    /**
+     * Getter del separador.
+     *
+     * Este método devuelve el valor que tiene el objeto del separador para el atributo 'separator'.
+     * @return El separador.
+     */
+    private JSeparator getSeparator() {
+<span class="pc bpc" id="L807" title="1 of 2 branches missed.">        if (separator == null) {</span>
+<span class="fc" id="L808">            separator = new JSeparator();</span>
+<span class="fc" id="L809">            separator.setForeground(SystemColor.scrollbar);</span>
         }
-<span class="fc" id="L596">        return separator;</span>
+<span class="fc" id="L811">        return separator;</span>
     }
 
-    public JLabel getLbPosicionX() {
-<span class="pc bpc" id="L600" title="1 of 2 branches missed.">        if (lbPosicionX == null) {</span>
-<span class="fc" id="L601">            lbPosicionX = new JLabel(&quot;Posicion X: &quot;);</span>
-<span class="fc" id="L602">            lbPosicionX.setHorizontalAlignment(SwingConstants.CENTER);</span>
-<span class="fc" id="L603">            lbPosicionX.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
+    /**
+     * Getter de la etiqueta del título para la posición X.
+     *
+     * Este método devuelve el valor que tiene el objeto de la etiqueta del título de la posición X para el atributo 'lbPosicionX'.
+     * @return La etiqueta con el texto para el título de la posición X.
+     */
+    private JLabel getLbPosicionX() {
+<span class="pc bpc" id="L821" title="1 of 2 branches missed.">        if (lbPosicionX == null) {</span>
+<span class="fc" id="L822">            lbPosicionX = new JLabel(&quot;Posicion X: &quot;);</span>
+<span class="fc" id="L823">            lbPosicionX.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L824">            lbPosicionX.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
         }
-<span class="fc" id="L605">        return lbPosicionX;</span>
+<span class="fc" id="L826">        return lbPosicionX;</span>
     }
 
-    public JTextField getTxPosicionX() {
-<span class="fc bfc" id="L609" title="All 2 branches covered.">        if (txPosicionX == null) {</span>
-<span class="fc" id="L610">            txPosicionX = new JTextField();</span>
-<span class="fc" id="L611">            txPosicionX.setEditable(false);</span>
-<span class="fc" id="L612">            txPosicionX.setHorizontalAlignment(SwingConstants.CENTER);</span>
-<span class="fc" id="L613">            txPosicionX.setColumns(10);</span>
+    /**
+     * Getter del campo de texto para la posición X.
+     *
+     * Este método devuelve el valor que tiene el objeto del campo de texto de la posición X para el atributo 'txPosicionX'.
+     * @return El campo de texto para la posición X.
+     */
+    private JTextField getTxPosicionX() {
+<span class="fc bfc" id="L836" title="All 2 branches covered.">        if (txPosicionX == null) {</span>
+<span class="fc" id="L837">            txPosicionX = new JTextField();</span>
+<span class="fc" id="L838">            txPosicionX.setEditable(false);</span>
+<span class="fc" id="L839">            txPosicionX.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L840">            txPosicionX.setColumns(10);</span>
         }
-<span class="fc" id="L615">        return txPosicionX;</span>
+<span class="fc" id="L842">        return txPosicionX;</span>
     }
 
-    public JLabel getLbPosicionY() {
-<span class="pc bpc" id="L619" title="1 of 2 branches missed.">        if (lbPosicionY == null) {</span>
-<span class="fc" id="L620">            lbPosicionY = new JLabel(&quot;Posicion Y: &quot;);</span>
-<span class="fc" id="L621">            lbPosicionY.setHorizontalAlignment(SwingConstants.CENTER);</span>
-<span class="fc" id="L622">            lbPosicionY.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
+    /**
+     * Getter de la etiqueta del título para la posición Y.
+     *
+     * Este método devuelve el valor que tiene el objeto de la etiqueta del título de la posición Y para el atributo 'lbPosicionY'.
+     * @return La etiqueta con el texto para el título de la posición Y.
+     */
+    private JLabel getLbPosicionY() {
+<span class="pc bpc" id="L852" title="1 of 2 branches missed.">        if (lbPosicionY == null) {</span>
+<span class="fc" id="L853">            lbPosicionY = new JLabel(&quot;Posicion Y: &quot;);</span>
+<span class="fc" id="L854">            lbPosicionY.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L855">            lbPosicionY.setFont(new Font(&quot;Tahoma&quot;, Font.BOLD, 14));</span>
         }
-<span class="fc" id="L624">        return lbPosicionY;</span>
+<span class="fc" id="L857">        return lbPosicionY;</span>
     }
 
-    public JTextField getTxPosicionY() {
-<span class="fc bfc" id="L628" title="All 2 branches covered.">        if (txPosicionY == null) {</span>
-<span class="fc" id="L629">            txPosicionY = new JTextField();</span>
-<span class="fc" id="L630">            txPosicionY.setEditable(false);</span>
-<span class="fc" id="L631">            txPosicionY.setHorizontalAlignment(SwingConstants.CENTER);</span>
-<span class="fc" id="L632">            txPosicionY.setColumns(10);</span>
+    /**
+     * Getter del campo de texto para la posición Y.
+     *
+     * Este método devuelve el valor que tiene el objeto del campo de texto de la posición Y para el atributo 'txPosicionY'.
+     * @return El campo de texto para la posición Y.
+     */
+    private JTextField getTxPosicionY() {
+<span class="fc bfc" id="L867" title="All 2 branches covered.">        if (txPosicionY == null) {</span>
+<span class="fc" id="L868">            txPosicionY = new JTextField();</span>
+<span class="fc" id="L869">            txPosicionY.setEditable(false);</span>
+<span class="fc" id="L870">            txPosicionY.setHorizontalAlignment(SwingConstants.CENTER);</span>
+<span class="fc" id="L871">            txPosicionY.setColumns(10);</span>
         }
-<span class="fc" id="L634">        return txPosicionY;</span>
+<span class="fc" id="L873">        return txPosicionY;</span>
     }
 
-    public VentanaPrincipal getReferenciaThis() {
-<span class="fc" id="L638">        return this;</span>
+    /**
+     * Getter de la referencia a la propia clase.
+     *
+     * Este método devuelve el valor que tiene el objeto de la instancia actual sobre la propia clase.
+     * @return La referencia a la propia clase (this).
+     */
+    private VentanaPrincipal getReferenciaThis() {
+<span class="fc" id="L883">        return this;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

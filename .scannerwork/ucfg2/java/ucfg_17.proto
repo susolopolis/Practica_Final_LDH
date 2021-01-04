@@ -1,65 +1,0 @@
-
-1Objetos.Casa#mostrar_objeto(I)[Ljava/lang/String;\
-RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.java@ @(""4*®
-2\
-RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.javaA A(Ž
-‹
-\
-RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.javaA A(
-objetoObjetos.Objeto_Casa"__id*
-""±
-®
-\
-RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.javaA A(
-objetoObjetos.Objeto_Casa"
-__arrayGet*
-
-%0java.util.ArrayList*
-""*
-3
-1*Ì
-3\
-RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.javaB B(ãà
-\
-RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.javaB B(3
-
-%1void"+Objetos.Objeto_Casa#calculate_next_pos(II)V*
-
-objetoObjetos.Objeto_Casa*
-""*
-""2calculate_next_pos(II)*
-2*Š
-4\
-RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.javaA" A()¡
-ž
-\
-RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.javaA" A()
-%0java.util.ArrayList"__id**
-Objetos.Casa"	
-objetos*
-2*³
-1\
-RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.javaD D(¡
-ž
-\
-RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.javaD D(
-%2java.util.ArrayList"__id**
-Objetos.Casa"	
-objetos×Ô
-\
-RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.javaD D(
-%3Objetos.Objeto_Casa",java.util.ArrayList#get(I)Ljava/lang/Object;*
-
-%2java.util.ArrayList*
-""2get(I)ÕÒ
-\
-RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.javaD D('
-%4java.lang.String[]"0Objetos.Objeto_Casa#getInfo()[Ljava/lang/String;*
-
-%3Objetos.Objeto_Casa2	getInfo()"z
-\
-RC:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Objetos/Casa.javaD D((
-
-%4java.lang.String[]:
-""B
-Objetos.Casa

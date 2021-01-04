@@ -7,9 +7,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/*! Clase de test para el código comprendido en la clase Casa */
+
 public class CasaTest {
-    Casa casa_ejemplo = new Casa(500,300); /**< Un objeto Casa. Instancia del objeto Casa que se usará para ejecutar las pruebas sobre él. */
+    Casa casa_ejemplo = new Casa(500,300);/**< Un objeto Casa. Instancia del objeto Casa que se usará para ejecutar las pruebas sobre él. */
 
     /**
      * Test para comprobar la anchura de la casa.
@@ -18,12 +18,12 @@ public class CasaTest {
      * con su respectivo parámetro del constructor de la clase, y comprobándolo por medio de su método
      * getter definido.
      */
+
     @Test
     public void test_ancho(){
         System.out.println("Test de anchura en proceso...");
         assertEquals(500,casa_ejemplo.getAncho());
     }
-
     /**
      * Test para comprobar el largo de la casa.
      *
@@ -36,7 +36,6 @@ public class CasaTest {
         System.out.println("Test de longitud en proceso...");
         assertEquals(300,casa_ejemplo.getLargo());
     }
-
     /**
      * Test para comprobar la adición de un objeto a la casa.
      *
@@ -50,7 +49,6 @@ public class CasaTest {
         Objeto_Casa objeto = new Objeto_Casa("Ejemplo","ejemplo","ejemplo","ejemplo",casa2);
         casa_ejemplo.agregar_objeto(objeto);
     }
-
     /**
      * Test para comprobar la eliminación de un objeto del hogar.
      *
@@ -68,6 +66,14 @@ public class CasaTest {
         assertTrue(casa_ejemplo.eliminar_objeto(objeto));
         assertFalse(casa_ejemplo.eliminar_objeto(objeto));
     }
+
+    /**
+     * Test para comprobar la eliminación de un objetos del hogar.
+     *
+     * En este test se comprueba la eliminación de objetos del hogar. Creamos dos objetos a eliminar que primeramente agregaremos
+     * Se crearan otros dos objetos que agregaremos a su vez, para poder eliminar dichos objetos (dando un resultado positivo) y
+     * tambien provocando que no se pueda eliminar, para cubrir todas las opciones.
+     */
 
     @Test
     public void test_eliminar_objetos(){
@@ -93,6 +99,13 @@ public class CasaTest {
         assertFalse(casa_ejemplo.eliminar_objetos(objetos_eliminar2));
     }
 
+    /**
+     * Test para comprobar la actualizacion de los objetos.
+     *
+     * En este test se comprueba la correcta actualizacion de un objeto agregado, asi como el fallo si intentamos actulizar un objeto
+     * que no coincide en su identificador
+     */
+
     @Test
     public void test_actualizar_objeto(){
         System.out.println("Test de actualizacion de objeto en proceso...");
@@ -106,6 +119,13 @@ public class CasaTest {
         assertTrue(casa_ejemplo.actualizar_objeto(objeto2));
         assertFalse(casa_ejemplo.actualizar_objeto(objeto3));
     }
+
+    /**
+     * Test para comprobar si se muestra correctamente el objeto
+     *
+     * Primero creamos y agregamos el objeto para asi poder verificar que el metodo mostrar_objeto
+     * funciona correctamente.
+     */
 
     @Test
     public void test_mostrar_objeto(){

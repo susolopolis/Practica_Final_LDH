@@ -1,7 +1,0 @@
-organization=susolopolis
-projectKey=Prueba_P_Final
-serverUrl=https://sonarcloud.io
-serverVersion=8.0.0.15925
-dashboardUrl=https://sonarcloud.io/dashboard?id=Prueba_P_Final
-ceTaskId=AXbDY4ms69nu-nGeREBi
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AXbDY4ms69nu-nGeREBi

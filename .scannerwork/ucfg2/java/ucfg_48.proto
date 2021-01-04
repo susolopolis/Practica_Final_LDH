@@ -1,58 +1,0 @@
-
-;Ejecutar.VentanaPrincipal#getTxId()Ljavax/swing/JTextField;k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaÖ Ö("3*¥
-2k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaá á(#¶£
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaá á(!
-%1javax.swing.JTextField"javax.swing.JTextField∏
-µ
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaá á(#
-%2" javax.swing.JTextField#<init>()V*
-
-%1javax.swing.JTextFieldΩ
-∫
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaá á(#%
-Ejecutar.VentanaPrincipal"
-txId"__id*
-
-%1javax.swing.JTextFieldΩ
-∫
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaà à(
-%3javax.swing.JTextField"__id*'*%
-Ejecutar.VentanaPrincipal"
-txIdÿ’
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaà à(
-
-%4void"%javax.swing.JTextField#setColumns(I)V*
-
-%3javax.swing.JTextField*2
-2setColumns(I)*
-1*∏
-3k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaÜ Ü(Ω
-∫
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaÜ Ü(
-%0javax.swing.JTextField"__id*'*%
-Ejecutar.VentanaPrincipal"
-txId*
-2
-1*¿
-1k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaä ä(Ω
-∫
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaä ä(
-%5javax.swing.JTextField"__id*'*%
-Ejecutar.VentanaPrincipal"
-txId"ç
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaä ä(
-
-%5javax.swing.JTextFieldB
-Ejecutar.VentanaPrincipal

@@ -1,96 +1,0 @@
-
-:Ejecutar.VentanaPrincipal#getLbMarca()Ljavax/swing/JLabel;k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaç ç("3*°
-2k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaè! è(*ûõ
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaè è( 
-%1javax.swing.JLabel"javax.swing.JLabelœ
-Ã
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaè è(+
-%2".javax.swing.JLabel#<init>(Ljava/lang/String;)V*
-
-%1javax.swing.JLabel*	
-Marca: º
-π
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaè è(+(
-Ejecutar.VentanaPrincipal"	
-lbMarca"__id*
-
-%1javax.swing.JLabelº
-π
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaê ê(
-%3javax.swing.JLabel"__id***(
-Ejecutar.VentanaPrincipal"	
-lbMarcaâ
-Ü
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaê+ ê(@	
-%4int"__id*
-""ÔÏ
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaê ê(A
-
-%5void"-javax.swing.JLabel#setHorizontalAlignment(I)V*
-
-%3javax.swing.JLabel*
-	
-%4int2setHorizontalAlignment(I)º
-π
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaë ë(
-%6javax.swing.JLabel"__id***(
-Ejecutar.VentanaPrincipal"	
-lbMarcaâ
-Ü
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaë/ ë(8	
-%7int"__id*
-""îë
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaë  ë($
-%8java.awt.Font"java.awt.FontŸ
-÷
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaë ë(=
-%9"+java.awt.Font#<init>(Ljava/lang/String;II)V*
-
-%8java.awt.Font*
-
-Tahoma*
-	
-%7int*2¸˘
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaë ë(>
-%10void"0javax.swing.JComponent#setFont(Ljava/awt/Font;)V*
-
-%6javax.swing.JLabel*
-
-%8java.awt.Font2setFont(Ljava/awt/Font;)*
-1*∑
-3k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaé é(º
-π
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaé é(
-%0javax.swing.JLabel"__id***(
-Ejecutar.VentanaPrincipal"	
-lbMarca*
-2
-1*Ω
-1k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaì ì(Ω
-∫
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaì ì(
-%11javax.swing.JLabel"__id***(
-Ejecutar.VentanaPrincipal"	
-lbMarca"ä
-k
-_C:/Users/jesus/Downloads/Practica_Localizador_Casa/src/main/java/Ejecutar/VentanaPrincipal.javaì ì(
-
-%11javax.swing.JLabelB
-Ejecutar.VentanaPrincipal

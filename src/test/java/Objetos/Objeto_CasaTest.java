@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-/*! Clase de test para el código comprendido en la clase Objeto_Casa */
+
 public class Objeto_CasaTest {
 
-    Casa casa_ejemplo = new Casa(100,100); /**< Un objeto Casa. Instancia del objeto Casa que se usará para ejecutar las pruebas sobre él. */
+    Casa casa_ejemplo = new Casa(100,100);/**< Un objeto Casa. Instancia del objeto Casa que se usará para ejecutar las pruebas sobre él. */
 
     /**
      * Test para comprobar la creación de un objeto del hogar.
@@ -16,12 +16,12 @@ public class Objeto_CasaTest {
      * En este test se realiza la creación de un objeto Objeto_Casa por medio del constructor de la clase,
      * pasando los parámetros correspondientes que establecen las propiedades del objeto.
      */
+
     @Test
     public void test_crear(){
         System.out.println("Test de creacion en proceso...");
         Objeto_Casa objeto = new Objeto_Casa("Ejemplo","ejemplo","ejemplo","ejemplo",casa_ejemplo);
     }
-
     /**
      * Test para comprobar la modificación de los objetos.
      *
@@ -35,7 +35,6 @@ public class Objeto_CasaTest {
         Objeto_Casa objeto2 = new Objeto_Casa("Ejemplo2","ejemplo2","ejemplo2","ejemplo2",casa_ejemplo);
         objeto.setObjeto(objeto2);
     }
-
     /**
      * Test para comprobar la toma de valores de las propiedades del objeto.
      *
@@ -53,7 +52,6 @@ public class Objeto_CasaTest {
         assertEquals("valor",objeto.getValor());
 
     }
-
     /**
      * Test para comprobar la redefinición del método toString().
      *

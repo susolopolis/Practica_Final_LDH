@@ -1,6 +1,11 @@
 package Objetos;
 
-/*! Clase complementaria de la lógica que instancia un objeto para la casa */
+import Ejecutar.VentanaPrincipal;
+
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class Objeto_Casa{
 
     private final String ID; /**< Una cadena. El ID del objeto. */
@@ -25,7 +30,14 @@ public class Objeto_Casa{
         this.marca = marca;
         this.modelo = modelo;
         this.valor = valor;
-        this.ruta = new Ruta(casa);
+
+        Logger logger=Logger.getLogger(VentanaPrincipal.class.getName());
+
+        try {
+            this.ruta = new Ruta(casa);
+        } catch (NoSuchAlgorithmException e) {
+            logger.log(Level.SEVERE,"Excepcion");
+        }
     }
 
     /**
