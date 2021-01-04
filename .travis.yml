@@ -9,10 +9,6 @@ jdk:
   - openjdk11
   
 before_install:
-
- - chmod +x gradlew
-# http://ecmendenhall.github.io/blog/blog/2013/05/28/two-travis-ci-solutions/
-# enable GUI subsystem, otherwise we can't test the Swing parts (java.awt.HeadlessException)
  - "export DISPLAY=:99.0"
  - "sh -e /etc/init.d/xvfb start"
   
