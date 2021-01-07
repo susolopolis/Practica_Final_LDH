@@ -95,15 +95,11 @@ public class VentanaPrincipalTest {
         Casa casa_ejemplo = new Casa(100,100);
         Objeto_Casa objeto = new Objeto_Casa("Ejemplo","ejemplo","ejemplo","ejemplo",casa_ejemplo);
 
-        frame.recuperarObjeto(objeto);
+        try {
+            frame.recuperarObjeto(objeto);
+        } catch (Exception e) {
+            System.out.println("Test Recurperar Objeto no superado...");
+            e.printStackTrace();
+        }
     }
-
-    /**
-     * Test para comprobar el actionPerformed de los botones en la IGU.
-     *
-     * En este test se comprueba el funcionamiento de los botones de la IGU, de tal forma que
-     * su actionPerformed se active o no en función del foco en el que se encuentre la ejecución
-     * de la aplicación.
-     */
-    
 }
