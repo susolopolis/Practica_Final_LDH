@@ -110,11 +110,7 @@ public class VentanaPrincipalTest {
     @Test
     public void test_ActionPerformed(){
         try {
-
-            frame.setCampoID("Tenis");
-            frame.setCampoMarca("Nike");
-            frame.setCampoModelo("Air");
-            frame.setCampoValor("200");
+            frame.setRandomCampos();
 
             frame.btCrear.doClick();
             frame.btGuardar.doClick();
