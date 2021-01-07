@@ -102,7 +102,7 @@ public class VentanaPrincipalTest {
     /**
      * Test para comprobar el actionPerformed de los botones en la IGU.
      *
-     * En este test se comprueba el funcionamiento de los botones de la IGU, de tal forma que
+     * En este test se comprueba el funcionamiento de los botones crear y guardar de la IGU, de tal forma que
      * su actionPerformed se active o no en función del foco en el que se encuentre la ejecución
      * de la aplicación.
      */
@@ -111,11 +111,13 @@ public class VentanaPrincipalTest {
     public void test_ActionPerformed(){
         try {
 
+            frame.setCampoID("Tenis");
+            frame.setCampoMarca("Nike");
+            frame.setCampoModelo("Air");
+            frame.setCampoValor("200");
+
             frame.btCrear.doClick();
-            //frame.btActualizar.doClick();
-            //frame.btEliminar.doClick();
             frame.btGuardar.doClick();
-            //frame.btRecuperar.doClick();
 
         }catch (Exception e){
             System.out.println("Test no superado...");
