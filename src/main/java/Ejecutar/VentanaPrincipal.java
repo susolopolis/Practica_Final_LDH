@@ -890,41 +890,17 @@ public class VentanaPrincipal extends JFrame {
     }
 
     /**
-     * Setter para testeo de los botones para establecer campo de ID.
+     * Setter para testeo de los botones para establecer campos aleatorios.
      *
-     * Este metodo le otorgara a ID el valor recibido por parametro.
+     * Este metodo le otorgara a los distintos campos valores aleatorios para poder realizar un testeo del boton guardar.
      */
 
-    public void setCampoID(String ID){
-        getTxId().setText(ID);
-    }
+    public void setRandomCampos(){
+        getTxId().setText("Tenis");
+        getTxModelo().setText("Air");
+        getTxMarca().setText("Nike");
+        getTxValor().setText("200");
 
-    /**
-     * Setter para testeo de los botones para establecer campo de Marca.
-     *
-     * Este metodo le otorgara a Marca el valor recibido por parametro.
-     */
-    public void setCampoMarca(String Marca){
-        getTxMarca().setText(Marca);
-    }
-
-    /**
-     * Setter para testeo de los botones para establecer campo de Modelo.
-     *
-     * Este metodo le otorgara a Modelo el valor recibido por parametro.
-     */
-
-    public void setCampoModelo(String modelo){
-        getTxModelo().setText(modelo);
-    }
-
-    /**
-     * Setter para testeo de los botones para establecer campo de Valor.
-     *
-     * Este metodo le otorgara a Valor el valor recibido por parametro.
-     */
-
-    public void setCampoValor(String valor){
-        getTxValor().setText(valor);
+        //Guardar objeto para poder hacer testeo de Guardar
     }
 }
