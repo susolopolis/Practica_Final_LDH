@@ -20,6 +20,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+
 public class VentanaPrincipal extends JFrame {
 
     /**
@@ -76,7 +78,11 @@ public class VentanaPrincipal extends JFrame {
      * Método que instancia la propia clase VentanaPrincipal y visibiliza la interfaz.
      */
     public static void main(String[] args) {
+
         Logger logger=Logger.getLogger(VentanaPrincipal.class.getName());
+        System.setProperty("java.awt.headless", "true");
+        System.out.println(java.awt.GraphicsEnvironment.isHeadless());
+
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
@@ -881,5 +887,44 @@ public class VentanaPrincipal extends JFrame {
      */
     private VentanaPrincipal getReferenciaThis() {
         return this;
+    }
+
+    /**
+     * Setter para testeo de los botones para establecer campo de ID.
+     *
+     * Este metodo le otorgara a ID el valor recibido por parametro.
+     */
+
+    public void setCampoID(String ID){
+        getTxId().setText(ID);
+    }
+
+    /**
+     * Setter para testeo de los botones para establecer campo de Marca.
+     *
+     * Este metodo le otorgara a Marca el valor recibido por parametro.
+     */
+    public void setCampoMarca(String Marca){
+        getTxMarca().setText(Marca);
+    }
+
+    /**
+     * Setter para testeo de los botones para establecer campo de Modelo.
+     *
+     * Este metodo le otorgara a Modelo el valor recibido por parametro.
+     */
+
+    public void setCampoModelo(String modelo){
+        getTxModelo().setText(modelo);
+    }
+
+    /**
+     * Setter para testeo de los botones para establecer campo de Valor.
+     *
+     * Este metodo le otorgara a Valor el valor recibido por parametro.
+     */
+
+    public void setCampoValor(String valor){
+        getTxValor().setText(valor);
     }
 }
