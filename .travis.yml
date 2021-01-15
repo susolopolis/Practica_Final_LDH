@@ -5,10 +5,6 @@ os: windows
 services:
   - xvfb
 
-# Project JDK
-language: java
-jdk:
-  - oraclejdk9
  
   
 addons:
