@@ -1,15 +1,14 @@
 
 
 
-os: linux
-dist: xenial
+os: windows
 services:
   - xvfb
 
 # Project JDK
 language: java
 jdk:
-  - openjdk11
+  - oraclejdk9
  
   
 addons:
