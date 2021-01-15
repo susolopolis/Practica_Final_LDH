@@ -1,11 +1,17 @@
 
 
 
-os: windows
+os: linux
+dist: xenial
 services:
   - xvfb
 
-
+# Project JDK
+language: java
+jdk:
+  - openjdk11
+ 
+  
 addons:
   sonarcloud:
     organization: "susolopolis" # the key of the org you chose at step #3
