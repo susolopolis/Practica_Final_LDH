@@ -5,8 +5,7 @@ os: windows
 services:
   - xvfb
 
- 
-  
+
 addons:
   sonarcloud:
     organization: "susolopolis" # the key of the org you chose at step #3
